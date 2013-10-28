@@ -1,17 +1,29 @@
 var express = require('express');
 var http = require('http');
 var m = require('./mongoQuery')
+var MongoStore = require('connect-mongodb');
 var app = express();
 var passport = require('passport')
   , FacebookStrategy = require('passport-facebook').Strategy;
+var engines = require('consolidate');
+
 app.configure(function() {
-  app.use(express.cookieParser());
+  app.use(express.cookieParser('andrewsecret'));
   app.use(express.bodyParser());
-  app.use(express.session({ secret: 'andrewsecret' }));
+  app.use(express.session({ store: new MongoStore({url: 'mongodb://localhost/myprojectdb'}) }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
+
+  app.set('views', __dirname + '/views');
+  app.engine('html', engines.ejs);
+  app.set('view engine', 'html');
+  app.use(express.static(__dirname + '/resources'));
 });
+
+
+
+
 
 
 passport.use(new FacebookStrategy({
@@ -31,32 +43,41 @@ passport.use(new FacebookStrategy({
 
 passport.serializeUser(function(fbuser, done) {
   console.log('User id:' + fbuser.id);
-  done(null, fbuser.id);
-  m.User.find({uid: fbuser.id}, function(err, user){
-		// if(user == []){
-		// 	console.log('This is the user' + user);
-		// 	// console.log(fbuser);
-		// 	var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
 
-		// 	newUser.save(function (err, newUser) {
-		// 		console.log('saved' + newUser.id);
-		// 	});
+  console.log('serialized');
+    m.User.find({uid: fbuser.id}, function(err, user){
+      console.log('length' + user.length);
 
-		// 	// return newUser;
-		// } else {
-		// 	// return user;
-			
-		// 	console.log(fbuser.id);
-		// 	console.log(user);
-		// }
-		console.log(user);
-	})
+      if(user.length == 0){
+        
+        // console.log(fbuser);
+        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+
+        newUser.save(function (err, newUser) {
+          console.log('saved' + newUser.id);
+        });
+        done(null, fbuser.id);
+        // return newUser;
+      } else {
+        // return user;
+        console.log('This is the user' + user);
+        console.log(fbuser.id);
+        done(null, fbuser.id);
+      }
+      console.log(user);
+    })
+
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function(id, done) {
 	console.log('deserialize');
   	// m.findOrCreateUser(user);
-  	done(null, user);
+  console.log('id' + id);
+    // m.findOrCreateUser(user);
+    m.User.find({uid: id}, function(err,user){
+      done(null, user);
+      console.log('user:' + user)
+    });
 });
 
 
@@ -69,11 +90,26 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // authentication process by attempting to obtain an access token.  If
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', {session: true, successRedirect: 'http://localhost:8080/projectapp/main.html',
-  									  failureRedirect: 'http://localhost:8080/projectapp/index.html' }));
+app.get('/auth/facebook/callback', function(req,res,next){
+    console.log('ANDREW USER:' + req.user);
+    next();
+  },
+  passport.authenticate('facebook', {session: true, successRedirect: '/test',
+  									  failureRedirect: 'http://localhost:8080/projectapp/index.html' }
+  ));
 
-app.get("/findTasks", m.findTasks);
+app.get("/findTasks",
+  function(req, res, next){
+    console.log('user' + req.user);
+    next();
+
+  }, m.findTasks);
+
+app.get("/test", function(req,res){
+  console.log('req.user' + req.user);
+  res.render('main.html')
+
+})
 
 
 var port = 3000;

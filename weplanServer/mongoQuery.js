@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/' + 'myprojectdb');
 var db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   // yay!
@@ -41,8 +42,9 @@ var User = mongoose.model('User', userSchema);
 
 
 exports.findTasks = function (req, res) {
-	console.log(req.sessionStore.sessions);
-	return Task.find({'uid': req.id}, function (err, tasks) {
+	console.log('This is the user in find tasks' + req.user[0].uid);
+	console.log('Find Tasks');
+	return Task.find({uid: req.user[0].uid}, function (err, tasks) {
 		if (!err) {
 		        res.jsonp(tasks);
 		        console.log('sent');
