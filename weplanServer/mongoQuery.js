@@ -12,6 +12,7 @@ db.once('open', function callback () {
 
 var taskSchema = mongoose.Schema({
     uid: Number,
+    creator: String,
     name: String,
     details: String,
     id: Number

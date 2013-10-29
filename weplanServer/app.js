@@ -35,26 +35,27 @@ passport.use(new FacebookStrategy({
 
 passport.serializeUser(function(fbuser, done) {
 
-    m.User.find({uid: fbuser.id}, function(err, user){
+    // m.User.find({uid: fbuser.id}, function(err, user){
 
-      if(user.length == 0){
-        console.log('User Length is 0')
-        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+    //   if(user.length == 0){
+    //     console.log('User Length is 0')
+    //     var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
 
-        newUser.save(function (err, newUser) {
-          console.log('saved' + newUser.id);
-        });
-        done(null, fbuser.id);
-        console.log('serialized');
+    //     newUser.save(function (err, newUser) {
+    //       console.log('saved' + newUser.id);
+    //     });
+    //     done(null, fbuser.id);
+    //     console.log('serialized');
 
-      } else {
+    //   } else {
 
-        done(null, fbuser.id);
-        console.log('serialized');
-      }
+    //     done(null, fbuser.id);
+    //     console.log('serialized');
+    //   }
 
-    }) 
-    console.log('serialize');
+    // }) 
+    auth.serializeOrCreate(fbuser, done)
+    //  
 
 
 });
@@ -75,7 +76,7 @@ passport.deserializeUser(function(id, done) {
 
 
 
-
+// ROUTES START HERE (move to seperate file)
 
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
@@ -91,12 +92,7 @@ app.get('/auth/facebook/callback',
                       passport.authenticate('facebook', {session: true, successRedirect: '/main',
   									  failureRedirect: 'login.html' }));
 
-app.get("/findTasks",
-  function(req, res, next){
-    console.log('user id: ' + req.user[0]);
-    next();
 
-  }, m.findTasks);
 
 app.get("/main", auth.ensureAuthenticated, function(req, res){
   
@@ -108,6 +104,19 @@ app.get("/main", auth.ensureAuthenticated, function(req, res){
 app.get("/login", function(req, res){res.render('login.html')})
 
 
+app.get("/findTasks",
+  function(req, res, next){
+    console.log('user id: ' + req.user[0]);
+    next();
+
+  }, m.findTasks);
+
+  app.get("/findTasks",
+  function(req, res, next){
+    console.log('user id: ' + req.user[0]);
+    next();
+
+  }, m.findTasks);
 
 
 
@@ -115,32 +124,6 @@ app.get("/login", function(req, res){res.render('login.html')})
 
 
 
-
-
-
-
-// var serializeOrCreate =  function(fbuser, done){
-
-//   m.User.find({uid: fbuser.id}, function(err, user){
-
-//       if(user.length == 0){
-
-//         var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
-
-//         newUser.save(function (err, newUser) {
-//           console.log('saved' + newUser.id);
-//         });
-//         done(null, fbuser.id);
-//         console.log('serialized');
-
-//       } else {
-
-//         done(null, fbuser.id);
-//         console.log('serialized');
-//       }
-
-//     })
-// }
 
 var port = 3000;
 

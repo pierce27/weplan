@@ -27,6 +27,9 @@
         });
 
 
+
+
+
        $( ".refresh" ).click(function() {
                 $.ajax({
            url: 'http://localhost:3000/findTasks',
@@ -43,26 +46,35 @@
                console.log("refreshed");               
                console.log($scope.tasks);
 
-           }
+             }
+          });
+
+
         });
 
 
 
-        });
+        // $scope.createTask = function() {
+        //     console.log("creating")
+        //     var newTask = {name: this.name, details: this.details};
+        //     this.tasks.push(newTask);
+        //     this.text = '';
 
-        // $scope.tasks = tasks;
-        // console.log($scope.tasks);
-        // $scope.tasks = [
-        //                 {'id': '0',
-        //                 'name': 'Go to FLoris',
-        //                 'details': 'Go to Florist Next Week'},
-        //                 {'id': '1',
-        //                 'name': 'Pick up Dress',
-        //                 'details': 'Dress picked up tomorrow.'},
-        //                 {'id': '2',
-        //                 'name': 'Call DJ',
-        //                 'details': 'Call him at 12345678.'}
-        //             ];
+        // }
+
+
+  $scope.submit = function() {
+      i = $scope.tasks.length + 1
+      var newTask = {name: this.name, details: this.details, id: i};
+      this.tasks.push(newTask);
+
+    
+  };
+
+
+
+
+
 
 
     });

@@ -78,8 +78,8 @@
 		 	<!-- Start Content -->
 			<div class="tab-content">
 			  <!-- Tasks -->
-			  <div class="tab-pane active" id="tasks">
-				  <div ng-controller="TaskListCtrl" class="accordion" id="accordion2">
+			  <div ng-controller="TaskListCtrl" class="tab-pane active" id="tasks">
+				  <div  class="accordion" id="accordion2">
 		            <div ng-repeat="task in tasks" class="accordion-group">
 		              <div class="accordion-heading">
 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task.id}}">
@@ -136,20 +136,58 @@ K: Hi what do we have to do
 		            </div>
 		          </div>
 
-<!-- 		          <div class="accordion-group">
-		            <div class="accordion-heading">
-		              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-		                Florist
-		              </a>
-		            </div>
-		            <div id="collapseTwo" class="accordion-body collapse">
-		              <div class="accordion-inner">
-		                <textarea>
-		                  hskjdhasjdhsakjhd
-		                </textarea>
+		        </div>
+
+
+
+
+				  <div class="accordion" id="accordion2">
+		            <div class="accordion-group">
+		              <div class="accordion-heading">
+		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#createTask">
+		                  Create New Task
+		                </a>
 		              </div>
+		            <div id="createTask" class="accordion-body collapse">
+		            <!-- Start Task Container -->
+		              <div class="accordion-inner">
+
+<!-- 					    <form ng-submit="createTask" class="form-horizontal">
+						    <div class="control-group">
+							    <label class="control-label" for="inputName">Task Name</label>
+							    <div class="controls">
+								    <input type="text" ng-model="name" name="name" id="inputName" placeholder="Task Name">
+							    </div>
+						    </div>
+					    
+						    <div class="control-group">
+							    <label class="control-label" for="inputDetails">Details</label>
+							    <div class="controls">
+								    <input type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details">
+							    </div>
+						    </div>
+						    
+						    <div class="control-group">
+							    <div class="controls">
+								    <input type="submit" id="createTask" class="btn" value="Create Task"/>
+							    </div>
+						    </div>
+					    </form> -->
+
+
+    <form ng-submit="submit()">
+      Enter text and hit enter:
+      <input type="text" ng-model="name" name="name" />
+      <input type="text" ng-model="details" name="details" />
+      <input type="submit" id="submit" value="Submit" />
+
+    </form>
+
+
+		              </div>
+		              <!-- End Task Container -->
 		            </div>
-		          </div> -->
+		          </div>
 
 		        </div>
 		        <!-- End Tasks -->

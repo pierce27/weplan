@@ -12,7 +12,7 @@ module.exports.ensureAuthenticated = function (req, res, next){
 
 
 module.exports.serializeOrCreate =  function(fbuser, done){
-	console('Serialize or Create?')
+	console.log('Serialize or Create?')
   m.User.find({uid: fbuser.id}, function(err, user){
 
       if(user.length == 0){
