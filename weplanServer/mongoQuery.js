@@ -30,19 +30,9 @@ var Task = mongoose.model('Task', taskSchema);
 
 var User = mongoose.model('User', userSchema);
 
-// var newTask = new Task({ uid:'28805624', name: 'With id', details: 'Go to jewler and get rings', id: '3' });
-// console.log(newTask.name);
-
-// var newUser = new User ({id: 1234, firstName: 'Andrew', lastName: 'Pierce', profilepic: 'http://imgur.com/yyhs'});
-
-
-// newUser.save(function (err, newUser) {
-// 	console.log('saved' + newUser.id);
-// });
-
-
+//Find Tasks
 exports.findTasks = function (req, res) {
-	console.log('This is the user in find tasks' + req.user[0].uid);
+	console.log('This is the user in find tasks' + req.isAuthenticated());
 	console.log('Find Tasks');
 	return Task.find({uid: req.user[0].uid}, function (err, tasks) {
 		if (!err) {
@@ -54,35 +44,11 @@ exports.findTasks = function (req, res) {
 	});
 }
 
-exports.findOrCreateUser = function (fbuser){
-	 User.find({id: fbuser.id}, function(err, user){
-		if(!user){
-			// console.log(fbuser);
-			var newUser = new User ({id: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
 
-			newUser.save(function (err, newUser) {
-				console.log('saved' + newUser.id);
-			});
-
-			// return newUser;
-		} else {
-			// return user;
-			
-			console.log(fbuser.id);
-			console.log(user);
-		}
-	})
-}
 
 exports.User = User;
 
-// exports.newUser = function (user){
-// 	var newUser = new User ({id: req., firstName: 'Andrew', lastName: 'Pierce', profilepic: 'http://imgur.com/yyhs'});
 
-// 	newUser.save(function (err, newUser) {
-// 		console.log('saved' + newUser.id);
-// 	});
-// }
 
 
 

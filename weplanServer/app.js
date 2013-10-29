@@ -22,47 +22,36 @@ app.configure(function() {
 });
 
 
-
-
-
-
 passport.use(new FacebookStrategy({
     clientID: '1412510248979901',
     clientSecret: 'f3de5dd4e439edcd45aa5ae3575f7154',
     callbackURL: "/auth/facebook/callback"
   },  function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate(profile.name, function(err, user) {
-    //   if (err) { return done(err); }
-    //   console.log(profile);
-    //   done(null, user);
-    // });
-    console.log(profile);
+
     done(null, profile);
   }
 ));
 
 passport.serializeUser(function(fbuser, done) {
-  console.log('User id:' + fbuser.id);
 
-  console.log('serialized');
+  
     m.User.find({uid: fbuser.id}, function(err, user){
       console.log('length' + user.length);
 
       if(user.length == 0){
-        
-        // console.log(fbuser);
+
         var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
 
         newUser.save(function (err, newUser) {
           console.log('saved' + newUser.id);
         });
         done(null, fbuser.id);
-        // return newUser;
+        console.log('serialized');
+
       } else {
-        // return user;
-        console.log('This is the user' + user);
-        console.log(fbuser.id);
+
         done(null, fbuser.id);
+        console.log('serialized');
       }
       console.log(user);
     })
@@ -71,12 +60,12 @@ passport.serializeUser(function(fbuser, done) {
 
 passport.deserializeUser(function(id, done) {
 	console.log('deserialize');
-  	// m.findOrCreateUser(user);
-  console.log('id' + id);
-    // m.findOrCreateUser(user);
+
+  console.log('id: ' + id);
+
     m.User.find({uid: id}, function(err,user){
       done(null, user);
-      console.log('user:' + user)
+
     });
 });
 
@@ -100,13 +89,13 @@ app.get('/auth/facebook/callback', function(req,res,next){
 
 app.get("/findTasks",
   function(req, res, next){
-    console.log('user' + req.user);
+    console.log('user id: ' + req.user[0].uid);
     next();
 
   }, m.findTasks);
 
-app.get("/test", function(req,res){
-  console.log('req.user' + req.user);
+app.get("/main", function(req,res){
+
   res.render('main.html')
 
 })
