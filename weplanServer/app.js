@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var m = require('./mongoQuery')
+var auth = require('./auth')
 var MongoStore = require('connect-mongodb');
 var app = express();
 var passport = require('passport')
@@ -35,27 +36,27 @@ passport.use(new FacebookStrategy({
 passport.serializeUser(function(fbuser, done) {
 
   
-    m.User.find({uid: fbuser.id}, function(err, user){
-      console.log('length' + user.length);
+    // m.User.find({uid: fbuser.id}, function(err, user){
+    //   console.log('length' + user.length);
 
-      if(user.length == 0){
+    //   if(user.length == 0){
 
-        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+    //     var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
 
-        newUser.save(function (err, newUser) {
-          console.log('saved' + newUser.id);
-        });
-        done(null, fbuser.id);
-        console.log('serialized');
+    //     newUser.save(function (err, newUser) {
+    //       console.log('saved' + newUser.id);
+    //     });
+    //     done(null, fbuser.id);
+    //     console.log('serialized');
 
-      } else {
+    //   } else {
 
-        done(null, fbuser.id);
-        console.log('serialized');
-      }
-      console.log(user);
-    })
-
+    //     done(null, fbuser.id);
+    //     console.log('serialized');
+    //   }
+    //   console.log(user);
+    // })
+    done(null, fbuser.id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -79,13 +80,10 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // authentication process by attempting to obtain an access token.  If
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
-app.get('/auth/facebook/callback', function(req,res,next){
-    console.log('ANDREW USER:' + req.user);
-    next();
-  },
-  passport.authenticate('facebook', {session: true, successRedirect: '/test',
-  									  failureRedirect: 'http://localhost:8080/projectapp/index.html' }
-  ));
+var redirect;
+app.get('/auth/facebook/callback', 
+                      passport.authenticate('facebook', {session: true, successRedirect: '/main',
+  									  failureRedirect: 'login.html' }));
 
 app.get("/findTasks",
   function(req, res, next){
@@ -94,11 +92,11 @@ app.get("/findTasks",
 
   }, m.findTasks);
 
-app.get("/main", function(req,res){
+app.get("/main", auth.ensureAuthenticated, function(req, res){res.render('main.html')})
 
-  res.render('main.html')
+app.get("/login", function(req, res){res.render('login.html')})
 
-})
+
 
 
 var port = 3000;

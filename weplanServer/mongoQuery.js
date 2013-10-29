@@ -22,7 +22,8 @@ var userSchema = mongoose.Schema({
 	uid: Number,
 	firstName: String,
 	lastName: String,
-	profilepic: String
+	profilepic: String,
+	role: String
 
 });
 
@@ -32,8 +33,7 @@ var User = mongoose.model('User', userSchema);
 
 //Find Tasks
 exports.findTasks = function (req, res) {
-	console.log('This is the user in find tasks' + req.isAuthenticated());
-	console.log('Find Tasks');
+
 	return Task.find({uid: req.user[0].uid}, function (err, tasks) {
 		if (!err) {
 		        res.jsonp(tasks);
