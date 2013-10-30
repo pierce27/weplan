@@ -1,4 +1,5 @@
 var express = require('express');
+var async = require('async')
 var http = require('http');
 var m = require('./mongoQuery')
 var auth = require('./auth')
@@ -11,7 +12,7 @@ var engines = require('consolidate');
 app.configure(function() {
   app.use(express.cookieParser('andrewsecret'));
   app.use(express.bodyParser());
-  app.use(express.session({ store: new MongoStore({url: 'mongodb://localhost/myprojectdb'}) }));
+  app.use(express.session({ cookie: {maxAge: 10000}, store: new MongoStore({url: 'mongodb://localhost/myprojectdb'})  }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
@@ -29,44 +30,30 @@ passport.use(new FacebookStrategy({
     callbackURL: "/auth/facebook/callback"
   },  function(accessToken, refreshToken, profile, done) {
 
+    console.log(profile)
     done(null, profile);
+    // async(findOrCreate(profile, done))
   }
 ));
 
-passport.serializeUser(function(fbuser, done) {
+passport.serializeUser(function(user, done) {
 
-    // m.User.find({uid: fbuser.id}, function(err, user){
+       console.log('serialized');
 
-    //   if(user.length == 0){
-    //     console.log('User Length is 0')
-    //     var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+       //Look for User, if none exists create and serialize, if one exists serialize it
+       findOrCreate(user, done);
 
-    //     newUser.save(function (err, newUser) {
-    //       console.log('saved' + newUser.id);
-    //     });
-    //     done(null, fbuser.id);
-    //     console.log('serialized');
-
-    //   } else {
-
-    //     done(null, fbuser.id);
-    //     console.log('serialized');
-    //   }
-
-    // }) 
-    auth.serializeOrCreate(fbuser, done)
-    //  
 
 
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function(uid, done) {
 	console.log('deserialize');
 
-  console.log('id: ' + id);
+  // console.log('id: ' + id);
 
-  m.User.find({uid: id}, function(err,user){
-    console.log("FOUND USER: " + user)
+  m.User.find({uid: uid}, function(err,user){
+    // console.log("FOUND USER: " + user)
     done(null, user);
 
     });
@@ -120,7 +107,28 @@ app.get("/findTasks",
 
 
 
+var findOrCreate= function(fbuser, done){   
 
+  m.User.find({uid: fbuser.id}, function(err, user){
+
+      if(user.length == 0){
+        console.log('User Length is 0')
+        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+
+        newUser.save(function (err, newUser) {
+          console.log('saved' + newUser.id);
+        });
+        done(null, fbuser.id);
+        console.log('serialized');
+
+      } else {
+
+        done(null, fbuser.id);
+        console.log('serialized');
+      }
+
+    })
+}
 
 
 

@@ -6,6 +6,7 @@ module.exports.ensureAuthenticated = function (req, res, next){
     res.redirect('/login')
 
   } else {
+  	req.session.cookie.maxAge = 5 * 60 * 1000;
     next()
   }
 }
