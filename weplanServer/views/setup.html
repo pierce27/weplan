@@ -1,0 +1,75 @@
+<html ng-app="projectApp" lang="en" class="csstransforms csstransforms3d csstransitions js cssanimations csstransitions"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+        <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="projectapp.css">
+        <script src="/js/angular.js"></script>
+        <script src="/js/controllers.js"></script>
+</head>
+  <body>
+            <!-- Button to trigger modal -->
+    <!-- <a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+        <script src="project.js"></script> 
+
+    <div id="myModal" class="modal show fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Save changes</button>
+        </div>
+    </div> -->
+
+
+        <div class="row">
+
+            <div class="bgform span8 offset5">
+                <div class="hero-unit">
+              <legend>Tell Us About Your Wedding</legend>
+              <div class="row">
+                <form ng-submit="start()" ng-controller="SetupCtrl">
+
+                    
+
+                                    
+                        <label>Date</label>
+                        <input style="height: 25px;" ng-model="date" type="date">
+                        <label>Location</label>
+                        <input style="height: 25px;" type="text">
+                        <label>Role</label>
+                        <input style="height: 25px;" ng-model="role" type="password">
+                                    
+
+
+
+
+
+
+
+
+                                    
+                        <label>Size of Bridal Party</label>
+                        <input style="height: 25px;" type="date">
+                        <label>Friends</label>
+                        <input style="height: 25px;" type="text">
+                        <label>Size of Wedding</label>
+                        <input style="height: 25px;" type="text">
+                        <!-- <button type="submit" class="btn">Start Wedding!</button> <br> -->
+                        <button type="submit" id="submit" class="btn btn-primary">Start</button>
+
+
+                    
+
+              </form>
+
+            </div>
+          </div>
+          </div>
+        </div>
+  </body>
+</html>

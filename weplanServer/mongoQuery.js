@@ -14,8 +14,7 @@ var taskSchema = mongoose.Schema({
     uid: Number,
     creator: String,
     name: String,
-    details: String,
-    id: Number
+    details: String
 
 });
 
@@ -48,6 +47,7 @@ exports.findTasks = function (req, res) {
 
 
 exports.User = User;
+exports.Task = Task;
 
 
 

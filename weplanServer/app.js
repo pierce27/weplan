@@ -1,5 +1,4 @@
 var express = require('express');
-var async = require('async')
 var http = require('http');
 var m = require('./mongoQuery')
 var auth = require('./auth')
@@ -77,18 +76,15 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback', 
                       passport.authenticate('facebook', {session: true, successRedirect: '/main',
-  									  failureRedirect: 'login.html' }));
+  									  failureRedirect: '/login' }));
 
 
 
-app.get("/main", auth.ensureAuthenticated, function(req, res){
-  
-  res.render('main.html')
-
-
-})
+app.get("/main", auth.ensureAuthenticated, auth.roleRender)
 
 app.get("/login", function(req, res){res.render('login.html')})
+
+app.get("/setup", auth.ensureAuthenticated,  function(req, res){res.render('setup.html')})
 
 
 app.get("/findTasks",
@@ -98,12 +94,25 @@ app.get("/findTasks",
 
   }, m.findTasks);
 
-  app.get("/findTasks",
-  function(req, res, next){
-    console.log('user id: ' + req.user[0]);
-    next();
+app.post("/profile", function(req,res, next){
 
-  }, m.findTasks);
+  saveProfile(req, res, next)
+  
+
+})
+
+app.post("/newTask", function(req,res, next){
+
+  saveNewTask(req, res, next)
+  
+
+})
+
+
+
+
+
+
 
 
 
@@ -113,7 +122,7 @@ var findOrCreate= function(fbuser, done){
 
       if(user.length == 0){
         console.log('User Length is 0')
-        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, profilepic: ''});
+        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, role: ''});
 
         newUser.save(function (err, newUser) {
           console.log('saved' + newUser.id);
@@ -128,6 +137,31 @@ var findOrCreate= function(fbuser, done){
       }
 
     })
+}
+
+var saveProfile = function(req, res, next) {
+  m.User.update({uid: req.user[0].uid}, { role: req.body.role }, function(err, numberAffected, raw){
+    console.log('Saved Role')
+    console.log(raw);
+
+  })
+  
+
+}
+
+var saveNewTask = function (req, res, next){
+  console.log(req.body)
+  console.log(req.user)
+
+  var newTask = new m.Task({ uid: req.user[0].uid, creator: req.user[0].firstName, name: req.body.name, details: req.body.details  })
+  console.log(newTask.name);
+
+  newTask.save(function (err, newTask) {
+    res.jsonp(newTask);
+  });
+
+
+
 }
 
 

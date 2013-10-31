@@ -43,7 +43,7 @@
       <div class="row-fluid">
       	<!-- Start Left Nav -->
         <div class="span2 leftnav">
-          <h3>Your Wedding</h3>
+          <h3>Grooms Wedding</h3>
 
 <!--           <ul class="nav nav-pills nav-stacked">
             <li class="active">
@@ -95,11 +95,11 @@
 				  <div  class="accordion" id="accordion2">
 		            <div ng-repeat="task in tasks" class="accordion-group">
 		              <div class="accordion-heading">
-		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task.id}}">
+		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
 		                  {{task.name}}
 		                </a>
 		              </div>
-		            <div id="{{task.id}}" class="accordion-body collapse">
+		            <div id="{{task._id}}" class="accordion-body collapse">
 		            <!-- Start Task Container -->
 		              <div class="accordion-inner">
 		              	<div class="row task-area">
