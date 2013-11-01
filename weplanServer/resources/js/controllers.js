@@ -63,7 +63,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       // }
 
 
-    $scope.submit = function() {
+    $scope.createTask = function() {
         i = $scope.tasks.length + 1
         var newTask = {name: this.name, details: this.details, id: i};
         // this.tasks.push(newTask);
@@ -73,6 +73,23 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
           
         });
       
+    };
+
+
+    $scope.deleteTask = function ( idx ) {
+    
+      console.log($scope.tasks[idx])
+      var task_to_delete = $scope.tasks[idx];
+
+    $http.post('/deleteTask', task_to_delete).success(function(data){
+      console.log('success');
+      $scope.tasks.splice(idx, 1);
+      // console.log(data);
+      
+    });
+
+      
+
     };
 
 

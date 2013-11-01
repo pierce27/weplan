@@ -44,6 +44,46 @@ exports.findTasks = function (req, res) {
 	});
 }
 
+exports.saveProfile = function(req, res, next) {
+  User.update({uid: req.user[0].uid}, { role: req.body.role }, function(err, numberAffected, raw){
+    console.log('Saved Role')
+    console.log(raw);
+
+  })
+}
+
+
+
+exports.saveNewTask = function (req, res, next){
+  console.log(req.body)
+  console.log(req.user)
+
+  var newTask = new Task({ uid: req.user[0].uid, creator: req.user[0].firstName, name: req.body.name, details: req.body.details  })
+  console.log(newTask.name);
+
+  return newTask.save(function (err, newTask) {
+    res.jsonp(newTask);
+  });
+}
+
+
+exports.deleteTask = function (req, res, next){
+  console.log('delete')
+  console.log(req.body)
+
+  // var newTask = new Task({ uid: req.user[0].uid, creator: req.user[0].firstName, name: req.body.name, details: req.body.details  })
+  // console.log(newTask.name);
+
+  // return newTask.save(function (err, newTask) {
+  //   res.jsonp(newTask);
+  // });
+
+	return Task.find({_id: req.body._id}).remove(function(query){
+		res.jsonp(query)		
+	});
+	
+}
+
 
 
 exports.User = User;

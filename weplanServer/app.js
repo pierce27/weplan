@@ -30,18 +30,23 @@ passport.use(new FacebookStrategy({
   },  function(accessToken, refreshToken, profile, done) {
 
     console.log(profile)
-    done(null, profile);
-    // async(findOrCreate(profile, done))
+    findOrCreate(profile, done)
+    // done(null, profile);
+
   }
 ));
+
+
+
+
 
 passport.serializeUser(function(user, done) {
 
        console.log('serialized');
 
        //Look for User, if none exists create and serialize, if one exists serialize it
-       findOrCreate(user, done);
-
+       // findOrCreate(user, done);
+       done(null, user.id);
 
 
 });
@@ -96,17 +101,25 @@ app.get("/findTasks",
 
 app.post("/profile", function(req,res, next){
 
-  saveProfile(req, res, next)
+  m.saveProfile(req, res, next)
+  
+
+})
+
+app.post("/deleteTask", function(req,res, next){
+
+  m.deleteTask(req, res, next)
   
 
 })
 
 app.post("/newTask", function(req,res, next){
 
-  saveNewTask(req, res, next)
+  m.saveNewTask(req, res, next)
   
 
 })
+
 
 
 
@@ -126,43 +139,23 @@ var findOrCreate= function(fbuser, done){
 
         newUser.save(function (err, newUser) {
           console.log('saved' + newUser.id);
+          done(null, fbuser);
         });
-        done(null, fbuser.id);
-        console.log('serialized');
+        
+        
 
       } else {
 
-        done(null, fbuser.id);
+        done(null, fbuser);
         console.log('serialized');
       }
 
     })
 }
 
-var saveProfile = function(req, res, next) {
-  m.User.update({uid: req.user[0].uid}, { role: req.body.role }, function(err, numberAffected, raw){
-    console.log('Saved Role')
-    console.log(raw);
-
-  })
-  
-
-}
-
-var saveNewTask = function (req, res, next){
-  console.log(req.body)
-  console.log(req.user)
-
-  var newTask = new m.Task({ uid: req.user[0].uid, creator: req.user[0].firstName, name: req.body.name, details: req.body.details  })
-  console.log(newTask.name);
-
-  newTask.save(function (err, newTask) {
-    res.jsonp(newTask);
-  });
 
 
 
-}
 
 
 
