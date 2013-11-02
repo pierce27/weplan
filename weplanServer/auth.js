@@ -20,6 +20,10 @@ module.exports.roleRender = function (req, res, next){
     	res.render('bride.html')
     } else if (req.user[0].role == 'groom'){
     	res.render('groom.html')
+    } else if (req.user[0].role == 'moh'){
+    	res.render('moh.html')
+    } else if (req.user[0].role == 'bestman'){
+    	res.render('bestman.html')
     } else if (req.user[0].role == 'bridesmaid'){
     	res.render('bridesmaid.html')
     } else if (req.user[0].role == 'groomsman'){

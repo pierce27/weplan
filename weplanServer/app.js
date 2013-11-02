@@ -73,11 +73,11 @@ passport.use('localSignIn', new LocalStrategy({
 passport.serializeUser(function(user, done) {
 
        console.log('serialized');
-       console.log(user[0]._id)
+       console.log(user.uid)
 
        //Look for User, if none exists create and serialize, if one exists serialize it
        // findOrCreate(user, done);
-       done(null, user[0]._id);
+       done(null, user.uid);
 
 
 });
@@ -87,7 +87,7 @@ passport.deserializeUser(function(uid, done) {
 
   // console.log('id: ' + id);
 
-  m.User.find({_id: uid}, function(err,user){
+  m.User.find({uid: uid}, function(err,user){
     // console.log("FOUND USER: " + user)
     done(null, user);
 
@@ -130,7 +130,7 @@ app.get("/findTasks",
 
   }, m.findTasks);
 
-app.post("/profile", function(req,res, next){
+app.post("/setup", function(req,res, next){
 
   m.saveProfile(req, res, next)
   

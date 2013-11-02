@@ -10,10 +10,24 @@ db.once('open', function callback () {
   // yay!
 });
 
+var weddingSchema = mongoose.Schema({
+	wid: Number,
+	name: String,
+	bride_uid: String,
+	groom_uid: String,
+	date: Date,
+	location: String
+
+})
+console.log('WEDDING SCHEMA')
+console.log(weddingSchema)
+
 var taskSchema = mongoose.Schema({
-    uid: String,
+    wid: Number,
     creator: String,
+    created: Date,
     name: String,
+    description: String,
     details: String
 
 });
@@ -23,13 +37,16 @@ var userSchema = mongoose.Schema({
 	firstName: String,
 	lastName: String,
 	profilepic: String,
-	role: String
+	role: String,
+	wid: Number
 
 });
 
 var Task = mongoose.model('Task', taskSchema);
 
 var User = mongoose.model('User', userSchema);
+
+var Wedding = mongoose.model('Wedding', weddingSchema);
 
 //Find Tasks
 exports.findTasks = function (req, res) {
@@ -46,15 +63,48 @@ exports.findTasks = function (req, res) {
 
 exports.saveProfile = function(req, res, next) {
 	console.log('USER')
-	console.log(req.user)
-  User.update({uid: req.user[0].uid}, { role: req.body.role }, function(err, numberAffected, raw){
-    console.log('Saved Role')
-    console.log(raw);
-    console.log(req.user)
-    res.send('updated')
+	var newWid
+	Wedding.find(function(err, weddings){
+		newWid = weddings.length + 1
+
+		if(req.body.role == 'bride'){
+			var brideUid = req.user[0].uid
+			var groomUid = ''
+		} else if(req.body.role == 'groom'){
+			var groomUid = req.user[0].uid
+			var brideUid = ''
+		} else {
+			var groomUid = ''
+			var brideUid = ''
+		}
+
+		console.log('NAME')
+		console.log(req.body.name)
+		var newWedding = new Wedding({wid: newWid, name: req.body.name, bride_uid: brideUid, groom_uid: groomUid, date: req.body.date, location: req.body.location })
+		console.log('NEW WEDDING')
+		console.log(newWedding)
+		newWedding.save(function (err, newWedding){
+		
+			User.update({uid: req.user[0].uid}, { role: req.body.role, wid: newWedding.wid}, function(err, numberAffected, raw){
+			    console.log('Saved Role')
+			    console.log(raw);
+			    console.log(req.user)
+			    console.log('New Wedding')
+			    console.log(newWedding)
+			    res.send('updated')
 
 
-  })
+
+			})
+
+	})
+
+
+
+	})
+
+
+
 }
 
 
@@ -145,6 +195,7 @@ exports.createLocal= function(wpUser, done){
 
         newUser.save(function (err, newUser) {
           console.log(err);
+          console.log(newUser)
           done(null, newUser);
         });
         

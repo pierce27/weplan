@@ -123,10 +123,16 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
 
   $scope.start = function(){
     var role = this.role;
-    var profile = {'role': this.role}
+    var profile = {
+      'role': this.role,
+      'name': this.name,
+      'location': this.location,
+      'date': this.date
+
+    }
     console.log('hi');
 
-    $http.post('/profile', profile).success(function(data){
+    $http.post('/setup', profile).success(function(data){
       console.log('success');
       window.location = '/main'
       // console.log(data);
