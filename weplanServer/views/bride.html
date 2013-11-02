@@ -60,7 +60,7 @@
               
 			  </li>
 			  <li><a href="#events">Events</a></li>
-			  <li><a href="#settings">Budget</a></li>
+			  <li><a href="#vendors">Vendors</a></li>
 			</ul>
 		 
 
@@ -87,7 +87,9 @@
 				  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				  	  
 				    <ul class="nav navbar-nav">
-				      <li><button type="button" class="btn btn-default btn-primary navbar-btn">New</button></li>
+				      <li>
+				      <button type="button" data-toggle="modal" class="btn btn-default btn-primary navbar-btn" data-target="#createTask">New</button>
+				      </li>
 				      <li><a href="#">Link</a></li>
 				      <li class="dropdown">
 				        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
@@ -112,6 +114,50 @@
 				  </div><!-- /.navbar-collapse -->
 				</nav>
 				<!-- END TASK NAV -->
+
+				<!-- Start Create Task MODAL -->
+
+				<div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+					<div class="moadl-dialog-center">
+						<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Modal header</h3>
+					</div>
+
+					<div class="modal-body">
+						<form ng-submit="createTask()" class="form-horizontal">
+						    <div class="form-group ">
+							    <label class="control-label" for="inputName">Task Name</label>
+							    <div class="controls">
+								    <input type="text" style="height:28px;" ng-model="name" name="name" id="inputName" placeholder="Task Name">
+							    </div>
+						    </div>
+					    
+						    <div class="form-group ">
+							    <label class="control-label" for="inputDetails">Details</label>
+							    <div class="controls">
+								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details"></textarea>
+							    </div>
+						    </div>
+						    
+						    <div class="form-group ">
+							    <div class="controls">
+								    <input type="submit"  data-dismiss="modal" aria-hidden="true" id="createTask" class="btn" value="Create Task"/>
+							    </div>
+						    </div>
+					    </form>
+					</div>
+
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						<button class="btn btn-primary">Save changes</button>
+					</div>					
+				</div>
+				</div>
+				</div>
+				<!-- END MODAL -->
 
 				<!-- START TASKS -->
 
@@ -191,11 +237,11 @@ K: Hi what do we have to do
 				  <div class="panel-group" id="accordion2">
 		            <div class="panel panel-default">
 		              <div class="panel-heading">
-		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#createTask">
+		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#createTaskPanel">
 		                  Create New Task
 		                </a>
 		              </div>
-		            <div id="createTask" class="panel-collapse collapse">
+		            <div id="createTaskPanel" class="panel-collapse collapse">
 		            <!-- Start Task Container -->
 		              <div class="panel-body">
 
@@ -254,6 +300,7 @@ K: Hi what do we have to do
 			  <div class="tab-pane fade" id="photographer">Photo</div>
 			  <div class="tab-pane fade" id="dj">DJ</div>
 			  <div class="tab-pane fade" id="events">Events</div>
+			  <div class="tab-pane fade" id="vendors">Vendors</div>
 
 			  
 			  <!-- Start Notes -->

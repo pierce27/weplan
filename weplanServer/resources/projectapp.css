@@ -31,6 +31,10 @@ form input {
 	height: 28px;
 }
 
+#createTask {
+	/*width: 100px;*/
+}
+
 /*.leftnav {
 	background-color: black;
 	color: white;
