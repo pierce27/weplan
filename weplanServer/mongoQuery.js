@@ -28,7 +28,8 @@ var taskSchema = mongoose.Schema({
     created: Date,
     name: String,
     description: String,
-    details: String
+    details: String,
+    users: [String]
 
 });
 
@@ -36,6 +37,7 @@ var userSchema = mongoose.Schema({
 	uid: String,
 	firstName: String,
 	lastName: String,
+	password: String,
 	profilepic: String,
 	role: String,
 	wid: Number
@@ -51,9 +53,21 @@ var Wedding = mongoose.model('Wedding', weddingSchema);
 //Find Tasks
 exports.findTasks = function (req, res) {
 
-	return Task.find({uid: req.user[0].uid}, function (err, tasks) {
+	return Task.find({users: req.user[0].uid}, function (err, tasks) {
 		if (!err) {
 		        res.jsonp(tasks);
+		        console.log('sent');
+	  	} else {
+	    		console.log(err);
+	  	}
+	});
+}
+
+exports.findWedding = function (req, res) {
+
+	return Wedding.find({wid: req.user[0].wid}, function (err, wedding) {
+		if (!err) {
+		        res.jsonp(wedding);
 		        console.log('sent');
 	  	} else {
 	    		console.log(err);
@@ -113,8 +127,9 @@ exports.saveNewTask = function (req, res, next){
   console.log(req.body)
   console.log(req.user)
 
-  var newTask = new Task({ uid: req.user[0].uid, creator: req.user[0].firstName, name: req.body.name, details: req.body.details  })
+  var newTask = new Task({ creator: req.user[0].uid, name: req.body.name, details: req.body.details  })
   console.log(newTask.name);
+  newTask.users.push(req.user[0].uid)
 
   return newTask.save(function (err, newTask) {
     res.jsonp(newTask);
@@ -145,28 +160,33 @@ exports.findOrCreateFB= function(wpUser, done){
 
       if(user.length == 0){
         console.log('User Length is 0')
-        var newUser = new User ({uid: wpUser.id, firstName: wpUuser.name.givenName, lastName: wpuUser.name.familyName, role: ''});
+        var newUser = new User ({uid: wpUser.id, firstName: wpUser.name.givenName, lastName: wpUser.name.familyName, role: ''});
 
         newUser.save(function (err, newUser) {
           console.log('saved' + newUser.id);
-          done(null, fbuser);
+          done(null, user[0]);
         });
         
         
 
       } else {
 
-        done(null, wpUser);
+        done(null, user[0]);
         console.log('serialized');
       }
 
     })
 }
 
-exports.findLocal= function(wpUser, done){   
+exports.findLocal= function(wpUser, done){  
+
+	  	console.log('Sign in User')
+  		console.log(wpUser); 
 
   User.find({uid: wpUser.email}, function(err, user){
 
+  		console.log('Sign in User')
+  		console.log(user);
       if(user.length == 0){
 
       	return done(null, false, { message: 'User Does Not Exist.' });
@@ -177,7 +197,8 @@ exports.findLocal= function(wpUser, done){
 
       } else {
 
-        done(null, user);
+      	theUser = user[0];
+        done(null, theUser);
         console.log('Logging In');
       }
 

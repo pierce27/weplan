@@ -31,7 +31,8 @@ passport.use(new FacebookStrategy({
   },  function(accessToken, refreshToken, profile, done) {
 
     console.log(profile)
-    m.findOrCreate(profile, done)
+    var wpUser = profile
+    m.findOrCreateFB(wpUser, done)
     // done(null, profile);
 
   }
@@ -51,6 +52,8 @@ passport.use('localSignUp', new LocalStrategy({
     var wpUser = req.body;
     m.createLocal(wpUser, done)
 }));
+
+
 
 passport.use('localSignIn', new LocalStrategy({
   usernameField: 'email',
@@ -73,21 +76,21 @@ passport.use('localSignIn', new LocalStrategy({
 passport.serializeUser(function(user, done) {
 
        console.log('serialized');
-       console.log(user.uid)
+       console.log(user)
 
        //Look for User, if none exists create and serialize, if one exists serialize it
        // findOrCreate(user, done);
-       done(null, user.uid);
+       done(null, user._id);
 
 
 });
 
-passport.deserializeUser(function(uid, done) {
+passport.deserializeUser(function(id, done) {
 	console.log('deserialize');
 
   // console.log('id: ' + id);
 
-  m.User.find({uid: uid}, function(err,user){
+  m.User.find({_id: id}, function(err,user){
     // console.log("FOUND USER: " + user)
     done(null, user);
 
@@ -123,12 +126,9 @@ app.get("/login", function(req, res){res.render('login.html')})
 app.get("/setup", auth.ensureAuthenticated,  function(req, res){res.render('setup.html')})
 
 
-app.get("/findTasks",
-  function(req, res, next){
-    console.log('user id: ' + req.user[0]);
-    next();
+app.get("/findTasks", m.findTasks);
 
-  }, m.findTasks);
+app.get("/findWedding", m.findWedding);
 
 app.post("/setup", function(req,res, next){
 

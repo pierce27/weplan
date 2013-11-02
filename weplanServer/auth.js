@@ -2,8 +2,9 @@ var m = require('./mongoQuery')
 
 module.exports.ensureAuthenticated = function (req, res, next){
   if (req.isAuthenticated() == false){
-
+  	console.log('not logged in')
     res.redirect('/login')
+    console.log(req.isAuthenticated())
 
 
   } else {

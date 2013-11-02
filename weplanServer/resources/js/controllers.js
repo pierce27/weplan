@@ -4,26 +4,12 @@ var projectApp = angular.module('projectApp', []);
      
 projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
-  
-  var db = 'db';
-  var mydb = 'myprojectdb';
-  var tasks;
-  $.ajax({
-     url: 'http://localhost:3000/findTasks',
-     type: 'get',
-     data: {'db':'myprojectdb'} ,
-     // dataType: 'json',
-     cache: false,
-     timeout: 5000,
-     success: function(data) {
-        // console.log(data);
-        console.log(data);
-        $scope.tasks = data;
-        // console.zlog(data.rows[0].key)
-        $scope.$apply();
-         
+  $http.get('/findTasks').success(function(data){
 
-     }
+    console.log(data)
+    $scope.tasks = data;
+    //$scope.$apply();
+
   });
 
 
@@ -31,23 +17,14 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
 
  $( ".refresh" ).click(function() {
-          $.ajax({
-     url: 'http://localhost:3000/findTasks',
-     type: 'get',
-     // dataType: 'jsonp',
-     cache: false,
-     timeout: 5000,
-     success: function(data) {
-        // console.log(data);
-        console.log(data);
-        $scope.tasks = data;
-        // console.zlog(data.rows[0].key)
-        $scope.$apply();
-         console.log("refreshed");               
-         console.log($scope.tasks);
 
-       }
-    });
+  // $http.get('/findTasks').success(function(data){
+
+  //   $scope.tasks = data;
+  //   $scope.$apply();
+
+  // });
+        $scope.apply
 
 
   });
@@ -184,6 +161,24 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
 
 
 });
+
+
+
+
+projectApp.controller('WeddingsCtrl', function WeddingCtrl($scope, $http) {
+
+  $http.get('/findWedding').success(function(data){
+
+    $scope.weddings = data;
+    console.log('Wedding')
+    console.log($scope.wedding)
+    // $scope.$apply();
+
+
+  });
+
+
+})
 
 
 
