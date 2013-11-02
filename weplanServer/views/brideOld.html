@@ -1,22 +1,10 @@
 <html ng-app="projectApp" lang="en" class="csstransforms csstransforms3d csstransitions js cssanimations csstransitions"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-		<script src="jquery-1.10.2.min.js" type="text/javascript"></script>
 		<script src="/js/angular.js"></script>
-        <link href="/bootstrapNew/css/bootstrap.css" rel="stylesheet">
-        <script src="/bootstrapNew/js/bootstrap.js" type="text/javascript"></script>
+        <link href="/bootstrap/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/projectapp.css">
-        
-        
-        
-		<script src="/js/controllers.js"></script>
-		<script src="/js/button.js"></script>
-		
-
-
-</head>
-  <body>
-  	<!-- <script src="/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
-  	<script src="/jquery-1.8.2.js" type="text/javascript"></script>
+        <script src="/jquery-1.8.2.js" type="text/javascript"></script>
+        <script src="/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
         <script src="/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
 		<script src="/bootstrap/bootstrap-transition.js" type="text/javascript"></script>
 		<script src="/bootstrap/bootstrap-alert.js" type="text/javascript"></script>
@@ -30,12 +18,19 @@
 		<script src="/bootstrap/bootstrap-collapse.js" type="text/javascript"></script>
 		<script src="/bootstrap/bootstrap-carousel.js" type="text/javascript"></script>
 		<script src="/bootstrap/bootstrap-typeahead.js" type="text/javascript"></script>
-		<script src="/bootstrap/bootstrap-affix.js" type="text/javascript"></script> -->
-    <div class="container">
+		<script src="/bootstrap/bootstrap-affix.js" type="text/javascript"></script>
+		<script src="/js/controllers.js"></script>
+		<script src="/js/button.js"></script>
+		
+
+
+</head>
+  <body>
+    <div class="container-fluid">
     	<!-- Start Nav -->
 		<div class="navbar navbar-inverse navbar-fized-top">
 		  <div class="navbar-inner">
-		    <a class="navbar-brand" href="#">Title</a>
+		    <a class="brand" href="#">Title</a>
 		    <ul class="nav">
 		      <li class="active"><a href="#">Home</a></li>
 		      <li><a href="#">Link</a></li>
@@ -45,9 +40,9 @@
 		</div>
 		<!-- End Nav -->
 
-      <div class="row">
+      <div class="row-fluid">
       	<!-- Start Left Nav -->
-        <div class="cold-md-2 leftnav">
+        <div class="span2 leftnav">
           <h3>Brides Wedding</h3>
 
 <!--           <ul class="nav nav-pills nav-stacked">
@@ -66,13 +61,13 @@
           </ul> -->
           Vendors go here when selected. Above Navigation goes across top.
           <br><br>
-          <button class="btn btn-default btn-primary refresh" type="button">Refresh Data</button> 
+          <button class="btn btn-primary refresh" type="button">Refresh Data</button> 
         </div>
         <!-- End Left Nav -->
         
 
         <!-- Start Main -->
-        <div class="col-md-8">
+        <div class="span8">
         	<br>
 	        <ul class="nav nav-tabs main-nav" id="myTab">
 			  <li class="active"><a href="#tasks">Tasks</a></li>
@@ -97,28 +92,28 @@
 			<div class="tab-content">
 			  <!-- Tasks -->
 			  <div ng-controller="TaskListCtrl" class="tab-pane active" id="tasks">
-				  <div  class="panel-group" id="accordion2">
-		            <div ng-repeat="task in tasks" class="panel panel-default">
+				  <div  class="accordion" id="accordion2">
+		            <div ng-repeat="task in tasks" class="accordion-group">
 							<div style="float:right;, position: relative; right: 200px;" class="btn-group">
 
-						    <a class="btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+						    <a class="btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 						    <ul class="dropdown-menu">
-						    <li><a href="#"><i class="glyphicon-pencil"></i> Edit</a></li>
-						    <li><button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon-trash glyphicon-white"></i>Delete</button></li>
+						    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+						    <li><button type="button" ng-click="deleteTask($index)" class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i>Delete</button></li>
 						    </ul>
 						    </div>
 		            	
-		              <div class="panel-heading">
+		              <div class="accordion-heading">
 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
 		                  {{task.name}}
 		                </a>
 		              </div>
-		            <div id="{{task._id}}" class="panel-collapse collapse">
+		            <div id="{{task._id}}" class="accordion-body collapse">
 		            <!-- Start Task Container -->
-		              <div class="panel-body">
+		              <div class="accordion-inner">
 		              	<div class="row task-area">
 		              		<!-- Start task details -->
-		              		<div class="col-md-3 ">
+		              		<div class="span3 ">
 
 				                	<h4>Description:</h4> 
 				                	{{task.details}}
@@ -131,7 +126,7 @@
 			                </div>
 			                <!-- end task details -->
 			                <!-- Start task discussion -->
-			                <div class="col-md-5">
+			                <div class="span5">
 			                	<textarea rows="10" style="width: 500px;"> 
 A: Hello Everyone 
 K: Hi what do we have to do 
@@ -144,14 +139,14 @@ K: Hi what do we have to do
 			                <br>
 			                <!-- Start Task Controls -->
 			                <div class="row task-area">
-			                	<div class="col-md-3">
-									<a class="btn btn-default accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
+			                	<div class="span3">
+									<a class="btn accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
 										Collapse
 									</a>
 
 			                	</div>
 
-			                	<div class="col-md-7">
+			                	<div class="span7">
 									<form class="form-search">
 								        <input type="text" class="input-medium search-query" style="height: 29px;">
 								        <button type="submit" class="btn">Send Message</button>
@@ -170,33 +165,33 @@ K: Hi what do we have to do
 
 
 
-				  <div class="panel-group" id="accordion2">
-		            <div class="panel panel-default">
-		              <div class="panel-heading">
+				  <div class="accordion" id="accordion2">
+		            <div class="accordion-group">
+		              <div class="accordion-heading">
 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#createTask">
 		                  Create New Task
 		                </a>
 		              </div>
-		            <div id="createTask" class="panel-collapse collapse">
+		            <div id="createTask" class="accordion-body collapse">
 		            <!-- Start Task Container -->
-		              <div class="panel-body">
+		              <div class="accordion-inner">
 
 					    <form ng-submit="createTask()" class="form-horizontal">
-						    <div class="form-group ">
+						    <div class="control-group">
 							    <label class="control-label" for="inputName">Task Name</label>
 							    <div class="controls">
 								    <input type="text" style="height:28px;" ng-model="name" name="name" id="inputName" placeholder="Task Name">
 							    </div>
 						    </div>
 					    
-						    <div class="form-group ">
+						    <div class="control-group">
 							    <label class="control-label" for="inputDetails">Details</label>
 							    <div class="controls">
 								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details"></textarea>
 							    </div>
 						    </div>
 						    
-						    <div class="form-group ">
+						    <div class="control-group">
 							    <div class="controls">
 								    <input type="submit" id="createTask" class="btn" value="Create Task"/>
 							    </div>
@@ -242,15 +237,15 @@ K: Hi what do we have to do
 			  <div class="tab-pane" id="notes">
 				<div class="tab-pane active" id="notes">
 				  
-				  <div class="panel-group" id="accordion2">
-		            <div class="panel panel-default">
-		              <div class="panel-heading">
+				  <div class="accordion" id="accordion2">
+		            <div class="accordion-group">
+		              <div class="accordion-heading">
 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#noteOne">
 		                  Favorite Party Favors
 		                </a>
 		              </div>
-		            <div id="noteOne" class="panel-collapse collapse">
-		              <div class="panel-body">
+		            <div id="noteOne" class="accordion-body collapse">
+		              <div class="accordion-inner">
 		                <textarea>
 
 		                </textarea>
@@ -258,14 +253,14 @@ K: Hi what do we have to do
 		            </div>
 		          </div>
 
-		          <div class="panel panel-default">
-		            <div class="panel-heading">
+		          <div class="accordion-group">
+		            <div class="accordion-heading">
 		              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#noteTwo">
 		                Vows
 		              </a>
 		            </div>
-		            <div id="noteTwo" class="panel-collapse collapse">
-		              <div class="panel-body">
+		            <div id="noteTwo" class="accordion-body collapse">
+		              <div class="accordion-inner">
 		                <textarea>
 Dear Blah Blah, blahaslkdshdasjasodhsk
 		                </textarea>
@@ -282,15 +277,15 @@ Dear Blah Blah, blahaslkdshdasjasodhsk
 
 
 
-<!--           <div class="panel-group" id="accordion2">
-             <div class="panel panel-default">
-              <div class="panel-heading">
+<!--           <div class="accordion" id="accordion2">
+             <div class="accordion-group">
+              <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                   Find a Hall
                 </a>
               </div>
-            <div id="collapseOne" class="panel-collapse collapse">
-              <div class="panel-body">
+            <div id="collapseOne" class="accordion-body collapse">
+              <div class="accordion-inner">
                 <textarea>
 
                 </textarea>
@@ -298,14 +293,14 @@ Dear Blah Blah, blahaslkdshdasjasodhsk
             </div>
           </div>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
+          <div class="accordion-group">
+            <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
                 Florist
               </a>
             </div>
-            <div id="collapseTwo" class="panel-collapse collapse">
-              <div class="panel-body">
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="accordion-inner">
                 <textarea>
                   hskjdhasjdhsakjhd
                 </textarea>
