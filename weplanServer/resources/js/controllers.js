@@ -75,6 +75,19 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       
     };
 
+    // $scope.createTask = function() {
+    //     i = $scope.tasks.length + 1
+
+    //     // this.tasks.push(newTask);
+    //     $http.post('/signup', newTask).success(function(data){
+    //       console.log('Saved');
+    //       $scope.tasks.push(data);
+          
+    //     });
+      
+    // };
+
+
 
     $scope.deleteTask = function ( idx ) {
     
@@ -85,7 +98,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       console.log('success');
       $scope.tasks.splice(idx, 1);
       // console.log(data);
-      
+
     });
 
       
@@ -117,6 +130,47 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
       console.log('success');
       window.location = '/main'
       // console.log(data);
+    });
+
+
+  }
+
+  $scope.signup = function(){
+    console.log('here in signup')
+    var user = {
+      'name': {
+        'firstName':this.firstName,
+        'lastName': this.lastName,
+      },
+      'email': this.email,
+      'password': this.password
+    };
+
+    $http.post('/signup', user).success(function(data){
+      console.log('success');
+      // window.location = '/main'
+      // console.log(data);
+
+      window.location = '/main'
+    });
+
+
+  }
+
+
+  $scope.signin = function(){
+    console.log('here in signup')
+    var user = {
+      'email': this.email,
+      'password': this.password
+    };
+
+    $http.post('/signin', user).success(function(data){
+      console.log('success');
+      // window.location = '/main'
+      // console.log(data);
+
+      window.location = '/main'
     });
 
 

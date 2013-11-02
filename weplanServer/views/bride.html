@@ -94,12 +94,21 @@
 			  <div ng-controller="TaskListCtrl" class="tab-pane active" id="tasks">
 				  <div  class="accordion" id="accordion2">
 		            <div ng-repeat="task in tasks" class="accordion-group">
+							<div style="float:right;, position: relative; right: 200px;" class="btn-group">
+
+						    <a class="btn-small dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+						    <ul class="dropdown-menu">
+						    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+						    <li><button type="button" ng-click="deleteTask($index)" class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i>Delete</button></li>
+						    </ul>
+						    </div>
+		            	
 		              <div class="accordion-heading">
-		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task.id}}">
+		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
 		                  {{task.name}}
 		                </a>
 		              </div>
-		            <div id="{{task.id}}" class="accordion-body collapse">
+		            <div id="{{task._id}}" class="accordion-body collapse">
 		            <!-- Start Task Container -->
 		              <div class="accordion-inner">
 		              	<div class="row task-area">
@@ -131,9 +140,10 @@ K: Hi what do we have to do
 			                <!-- Start Task Controls -->
 			                <div class="row task-area">
 			                	<div class="span3">
-									<a class="btn accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task.id}}">
+									<a class="btn accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
 										Collapse
 									</a>
+
 			                	</div>
 
 			                	<div class="span7">
@@ -141,6 +151,7 @@ K: Hi what do we have to do
 								        <input type="text" class="input-medium search-query" style="height: 29px;">
 								        <button type="submit" class="btn">Send Message</button>
 							        </form>
+							        
 			                	</div>
 
 		                </div>
@@ -165,18 +176,18 @@ K: Hi what do we have to do
 		            <!-- Start Task Container -->
 		              <div class="accordion-inner">
 
-<!-- 					    <form ng-submit="createTask" class="form-horizontal">
+					    <form ng-submit="createTask()" class="form-horizontal">
 						    <div class="control-group">
 							    <label class="control-label" for="inputName">Task Name</label>
 							    <div class="controls">
-								    <input type="text" ng-model="name" name="name" id="inputName" placeholder="Task Name">
+								    <input type="text" style="height:28px;" ng-model="name" name="name" id="inputName" placeholder="Task Name">
 							    </div>
 						    </div>
 					    
 						    <div class="control-group">
 							    <label class="control-label" for="inputDetails">Details</label>
 							    <div class="controls">
-								    <input type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details">
+								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details"></textarea>
 							    </div>
 						    </div>
 						    
@@ -185,16 +196,16 @@ K: Hi what do we have to do
 								    <input type="submit" id="createTask" class="btn" value="Create Task"/>
 							    </div>
 						    </div>
-					    </form> -->
+					    </form>
 
 
-    <form ng-submit="submit()">
+<!--     <form ng-submit="submit()">
       Enter text and hit enter:
       <input type="text" ng-model="name" name="name" />
       <input type="text" ng-model="details" name="details" />
       <input type="submit" id="submit" value="Submit" />
 
-    </form>
+    </form> -->
 
 
 		              </div>

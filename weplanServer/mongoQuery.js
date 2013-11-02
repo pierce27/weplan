@@ -11,7 +11,7 @@ db.once('open', function callback () {
 });
 
 var taskSchema = mongoose.Schema({
-    uid: Number,
+    uid: String,
     creator: String,
     name: String,
     details: String
@@ -19,7 +19,7 @@ var taskSchema = mongoose.Schema({
 });
 
 var userSchema = mongoose.Schema({
-	uid: Number,
+	uid: String,
 	firstName: String,
 	lastName: String,
 	profilepic: String,
@@ -45,9 +45,14 @@ exports.findTasks = function (req, res) {
 }
 
 exports.saveProfile = function(req, res, next) {
+	console.log('USER')
+	console.log(req.user)
   User.update({uid: req.user[0].uid}, { role: req.body.role }, function(err, numberAffected, raw){
     console.log('Saved Role')
     console.log(raw);
+    console.log(req.user)
+    res.send('updated')
+
 
   })
 }
@@ -82,6 +87,77 @@ exports.deleteTask = function (req, res, next){
 		res.jsonp(query)		
 	});
 	
+}
+
+exports.findOrCreateFB= function(wpUser, done){   
+
+  User.find({uid: wpUser.id}, function(err, user){
+
+      if(user.length == 0){
+        console.log('User Length is 0')
+        var newUser = new User ({uid: wpUser.id, firstName: wpUuser.name.givenName, lastName: wpuUser.name.familyName, role: ''});
+
+        newUser.save(function (err, newUser) {
+          console.log('saved' + newUser.id);
+          done(null, fbuser);
+        });
+        
+        
+
+      } else {
+
+        done(null, wpUser);
+        console.log('serialized');
+      }
+
+    })
+}
+
+exports.findLocal= function(wpUser, done){   
+
+  User.find({uid: wpUser.email}, function(err, user){
+
+      if(user.length == 0){
+
+      	return done(null, false, { message: 'User Does Not Exist.' });
+
+
+        
+        
+
+      } else {
+
+        done(null, user);
+        console.log('Logging In');
+      }
+
+    })
+}
+
+exports.createLocal= function(wpUser, done){  
+
+
+  User.find({uid: wpUser.uid}, function(err, user){
+
+      if(user.length == 0){
+        console.log('User Length is 0')
+        var newUser = new User ({uid: wpUser.email, password: wpUser.password, firstName: wpUser.name.firstName, lastName: wpUser.name.lastName, role: ''});
+
+        newUser.save(function (err, newUser) {
+          console.log(err);
+          done(null, newUser);
+        });
+        
+        
+
+      } else {
+
+        return done(null, false, { message: 'User Exists.' });
+
+        
+      }
+
+    })
 }
 
 

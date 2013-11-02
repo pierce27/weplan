@@ -5,7 +5,8 @@ var auth = require('./auth')
 var MongoStore = require('connect-mongodb');
 var app = express();
 var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+  , FacebookStrategy = require('passport-facebook').Strategy,
+    LocalStrategy = require('passport-local').Strategy;
 var engines = require('consolidate');
 
 app.configure(function() {
@@ -30,11 +31,40 @@ passport.use(new FacebookStrategy({
   },  function(accessToken, refreshToken, profile, done) {
 
     console.log(profile)
-    findOrCreate(profile, done)
+    m.findOrCreate(profile, done)
     // done(null, profile);
 
   }
 ));
+
+
+passport.use('localSignUp', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
+},
+    function(req, username, password, done){
+
+    console.log(req.body)
+    console.log('local')
+    
+    var wpUser = req.body;
+    m.createLocal(wpUser, done)
+}));
+
+passport.use('localSignIn', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
+},
+    function(req, username, password, done){
+
+    console.log(req.body)
+    console.log('local')
+    
+    var wpUser = req.body;
+    m.findLocal(wpUser, done)
+}));
 
 
 
@@ -43,10 +73,11 @@ passport.use(new FacebookStrategy({
 passport.serializeUser(function(user, done) {
 
        console.log('serialized');
+       console.log(user[0]._id)
 
        //Look for User, if none exists create and serialize, if one exists serialize it
        // findOrCreate(user, done);
-       done(null, user.id);
+       done(null, user[0]._id);
 
 
 });
@@ -56,7 +87,7 @@ passport.deserializeUser(function(uid, done) {
 
   // console.log('id: ' + id);
 
-  m.User.find({uid: uid}, function(err,user){
+  m.User.find({_id: uid}, function(err,user){
     // console.log("FOUND USER: " + user)
     done(null, user);
 
@@ -120,41 +151,15 @@ app.post("/newTask", function(req,res, next){
 
 })
 
+app.post('/signup',
+  passport.authenticate('localSignUp', { successRedirect: '/main',
+                                   failureRedirect: '/login'})
+);
 
-
-
-
-
-
-
-
-
-var findOrCreate= function(fbuser, done){   
-
-  m.User.find({uid: fbuser.id}, function(err, user){
-
-      if(user.length == 0){
-        console.log('User Length is 0')
-        var newUser = new m.User ({uid: fbuser.id, firstName: fbuser.name.givenName, lastName: fbuser.name.familyName, role: ''});
-
-        newUser.save(function (err, newUser) {
-          console.log('saved' + newUser.id);
-          done(null, fbuser);
-        });
-        
-        
-
-      } else {
-
-        done(null, fbuser);
-        console.log('serialized');
-      }
-
-    })
-}
-
-
-
+app.post('/signin',
+  passport.authenticate('localSignIn', { successRedirect: '/main',
+                                   failureRedirect: '/login'})
+);
 
 
 
