@@ -31,8 +31,12 @@ form input {
 	height: 28px;
 }
 
-#createTask {
+#createTaskArea {
 	/*width: 100px;*/
+	padding-left: 35%;
+	padding-top: 10%;
+	padding-right: 35%;
+	padding-bottom: 40% ;
 }
 
 /*.leftnav {
