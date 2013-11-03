@@ -25,6 +25,7 @@ console.log(weddingSchema)
 var taskSchema = mongoose.Schema({
     wid: Number,
     creator: String,
+    creatorFirstName: String,
     created: Date,
     name: String,
     description: String,
@@ -126,8 +127,10 @@ exports.saveProfile = function(req, res, next) {
 exports.saveNewTask = function (req, res, next){
   console.log(req.body)
   console.log(req.user)
+  console.log('Date')
+  console.log(Date.now())
 
-  var newTask = new Task({ creator: req.user[0].uid, name: req.body.name, details: req.body.details  })
+  var newTask = new Task({ creator: req.user[0].uid, creatorFirstName: req.user[0].firstName, created: Date.now(), name: req.body.name, details: req.body.details  })
   console.log(newTask.name);
   newTask.users.push(req.user[0].uid)
 

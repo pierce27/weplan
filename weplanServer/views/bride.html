@@ -125,7 +125,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h3 id="myModalLabel">New Task</h3>
 					</div>
-
+					<div class="container">
 					<div class="modal-body">
 						<form ng-submit="createTask()" class="form-horizontal">
 						    <div class="form-group ">
@@ -142,7 +142,7 @@
 							    </div>
 						    </div>
 						    
-						    <div class="form-group ">
+						    <div class="form-group">
 							    <div class="controls">
 								    <!-- <input type="submit"  data-dismiss="modal" aria-hidden="true" id="createTask" class="btn" value="Create Task"/> -->
 								    <button type="submit" id="createTask" class="btn btn-default btn-primary">Save changes</button>
@@ -150,11 +150,12 @@
 						    </div>
 					    </form>
 					</div>
+				</div>
 
-					<div class="modal-footer">
+<!-- 					<div class="modal-footer">
 						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 						<button type="submit" id="createTask" class="btn btn-default btn-primary">Save changes</button>
-					</div>					
+					</div>	 -->				
 				</div>
 				</div>
 				</div>
@@ -188,8 +189,10 @@
 				                	<h4>Description:</h4> 
 				                	{{task.details}}
 				                	<h4>Created By:</h4> 
-				                	<!-- {{task.owner}} -->
-				                	You
+				                	{{task.creatorFirstName}} 
+				                	<h4>Created</h4>
+				                	{{task.created | date:'medium'}}
+				                	
 
 
 
@@ -232,58 +235,6 @@ K: Hi what do we have to do
 
 		        </div>
 
-
-
-
-				  <div class="panel-group" id="accordion2">
-		            <div class="panel panel-default">
-		              <div class="panel-heading">
-		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#createTaskPanel">
-		                  Create New Task
-		                </a>
-		              </div>
-		            <div id="createTaskPanel" class="panel-collapse collapse">
-		            <!-- Start Task Container -->
-		              <div class="panel-body">
-
-					    <form ng-submit="createTask()" class="form-horizontal">
-						    <div class="form-group ">
-							    <label class="control-label" for="inputName">Task Name</label>
-							    <div class="controls">
-								    <input type="text" style="height:28px;" ng-model="name" name="name" id="inputName" placeholder="Task Name">
-							    </div>
-						    </div>
-					    
-						    <div class="form-group ">
-							    <label class="control-label" for="inputDetails">Details</label>
-							    <div class="controls">
-								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details"></textarea>
-							    </div>
-						    </div>
-						    
-						    <div class="form-group ">
-							    <div class="controls">
-								    <input type="submit" id="createTask" class="btn" value="Create Task"/>
-							    </div>
-						    </div>
-					    </form>
-
-
-<!--     <form ng-submit="submit()">
-      Enter text and hit enter:
-      <input type="text" ng-model="name" name="name" />
-      <input type="text" ng-model="details" name="details" />
-      <input type="submit" id="submit" value="Submit" />
-
-    </form> -->
-
-
-		              </div>
-		              <!-- End Task Container -->
-		            </div>
-		          </div>
-
-		        </div>
 		        <!-- End Tasks -->
 
 

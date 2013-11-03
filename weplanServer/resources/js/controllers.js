@@ -47,6 +47,8 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
         $http.post('/newTask', newTask).success(function(data){
           console.log('Saved');
           $scope.tasks.push(data);
+          $('#createTaskArea').modal('hide')
+
           
         });
       
