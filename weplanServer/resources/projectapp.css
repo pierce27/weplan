@@ -14,6 +14,10 @@
 
 }
 
+.taskOrder {
+	width: 20%;
+}
+
 .main-nav {
 	font-size: 18px;
 	font-weight: bold;
@@ -37,6 +41,16 @@ form input {
 	padding-top: 10%;
 	padding-right: 35%;
 	padding-bottom: 40% ;
+}
+
+.datepicker{
+
+	z-index:10010 !important;
+
+}
+
+.modal {
+	z-index: 10000;
 }
 
 /*.leftnav {

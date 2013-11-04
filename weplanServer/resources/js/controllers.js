@@ -1,5 +1,9 @@
 var projectApp = angular.module('projectApp', []);
 
+$(function() {
+  $( "#datepicker" ).datepicker();
+});
+
 
      
 projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
@@ -12,7 +16,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
   });
 
-
+  $scope.orderProp = 'name';
 
 
 
@@ -39,10 +43,21 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
       // }
 
+      $(function() {
+        $('#datepicker')
+            .datepicker()   
+            .on('changeDate', function(e){    
+                $scope.dueDate = $('#datepicker').val();    
+
+            });
+      });
+
 
     $scope.createTask = function() {
         i = $scope.tasks.length + 1
-        var newTask = {name: this.name, details: this.details, id: i};
+        var newTask = {name: this.name, details: this.details, id: i, dueDate: this.dueDate};
+        console.log('date')
+        console.log($scope.dueDate)
         // this.tasks.push(newTask);
         $http.post('/newTask', newTask).success(function(data){
           console.log('Saved');

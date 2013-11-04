@@ -30,6 +30,7 @@ var taskSchema = mongoose.Schema({
     name: String,
     description: String,
     details: String,
+    dueDate: Date,
     users: [String]
 
 });
@@ -130,7 +131,7 @@ exports.saveNewTask = function (req, res, next){
   console.log('Date')
   console.log(Date.now())
 
-  var newTask = new Task({ creator: req.user[0].uid, creatorFirstName: req.user[0].firstName, created: Date.now(), name: req.body.name, details: req.body.details  })
+  var newTask = new Task({ creator: req.user[0].uid, creatorFirstName: req.user[0].firstName, created: Date.now(), name: req.body.name, details: req.body.details, dueDate: req.body.dueDate  })
   console.log(newTask.name);
   newTask.users.push(req.user[0].uid)
 
