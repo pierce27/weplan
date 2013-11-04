@@ -153,7 +153,7 @@ app.post("/updateTask", m.updateTask);
 
 app.post("/deleteTask", m.deleteTask);
 
-app.post("/newTask", m.saveNewTask
+app.post("/newTask", m.saveNewTask);
 
 
 

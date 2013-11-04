@@ -86,6 +86,9 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   $scope.updateDescription = function (idx) {
   
     var description_id = '.description' + $scope.tasks[idx]._id;
+    var descriptionButton_id = '.' + $scope.tasks[idx]._id;
+
+    var descriptionButton_id_string = String(description_id)
     var description_id_string = String(description_id)
     var descHtml = $(description_id_string).html();
     console.log('description')
@@ -106,7 +109,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
     $http.post('/updateTask', task_to_update).success(function(data){
     console.log('success');
     console.log(data);
-    $(description_id_string).removeClass('show');
+    $(descriptionButton_id_string).removeClass('show');
 
     });
     

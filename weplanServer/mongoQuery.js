@@ -261,6 +261,8 @@ exports.createLocal= function(wpUser, done){
     })
 }
 
+exports.User = User
+
 
 
 
