@@ -4,6 +4,14 @@ $(function() {
   $( "#datepicker" ).datepicker();
 });
 
+$("div.description").click(function(){
+  
+  console.log('description');
+  $("btn description").addClass('show');
+
+
+  });
+
 
      
 projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
@@ -15,6 +23,16 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
     //$scope.$apply();
 
   });
+
+  $http.get('/getMe').success(function(data){
+
+    console.log(data)
+    $scope.me = data;
+    //$scope.$apply();
+    console.log($scope.me)
+
+  });
+  
 
   $scope.orderProp = 'name';
 
@@ -55,7 +73,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
     $scope.createTask = function() {
         i = $scope.tasks.length + 1
-        var newTask = {name: this.name, details: this.details, id: i, dueDate: this.dueDate};
+        var newTask = {name: this.name, description: this.description, details: this.details, id: i, dueDate: this.dueDate};
         console.log('date')
         console.log($scope.dueDate)
         // this.tasks.push(newTask);
@@ -98,6 +116,48 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       
 
     };
+
+    $scope.updateDescription = function (idx) {
+    
+      var task_to_update = $scope.tasks[idx]
+      console.log(task_to_update)
+
+
+      // $http.post('/updateTask', task_to_update).success(function(data){
+      //   console.log('success');
+
+      //   // console.log(data);
+
+      // });
+      
+
+    };
+
+    $scope.editDescription = function ( idx ) {
+
+      console.log(idx);
+      var description_id = '.' + $scope.tasks[idx]._id;
+      var description_id_string = String(description_id)
+      $(description_id_string).addClass('show');
+      console.log(description_id)
+
+      
+
+    };
+
+
+    $scope.closeDescription = function ( idx ) {
+
+      var description_id = '.' + $scope.tasks[idx]._id;
+      var description_id_string = String(description_id)
+      $(description_id_string).removeClass('show');
+      console.log('close desc')
+
+      
+
+    };
+
+
 
 
 
@@ -188,7 +248,7 @@ projectApp.controller('WeddingsCtrl', function WeddingCtrl($scope, $http) {
 
     $scope.weddings = data;
     console.log('Wedding')
-    console.log($scope.wedding)
+    console.log($scope.weddings)
     // $scope.$apply();
 
 

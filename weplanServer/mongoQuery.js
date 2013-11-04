@@ -31,7 +31,8 @@ var taskSchema = mongoose.Schema({
     description: String,
     details: String,
     dueDate: Date,
-    users: [String]
+    users: [String],
+    comments: [Object]
 
 });
 
@@ -59,6 +60,18 @@ exports.findTasks = function (req, res) {
 		if (!err) {
 		        res.jsonp(tasks);
 		        console.log('sent');
+	  	} else {
+	    		console.log(err);
+	  	}
+	});
+}
+
+exports.getMe = function (req, res) {
+
+	return User.find({uid: req.user[0].uid}, function (err, users) {
+		if (!err) {
+		        res.jsonp(users[0]);
+		        console.log('sent user');
 	  	} else {
 	    		console.log(err);
 	  	}
@@ -131,7 +144,7 @@ exports.saveNewTask = function (req, res, next){
   console.log('Date')
   console.log(Date.now())
 
-  var newTask = new Task({ creator: req.user[0].uid, creatorFirstName: req.user[0].firstName, created: Date.now(), name: req.body.name, details: req.body.details, dueDate: req.body.dueDate  })
+  var newTask = new Task({ wid: req.user[0].wid, creator: req.user[0].uid, creatorFirstName: req.user[0].firstName, created: Date.now(), name: req.body.name, description: req.body.description, details: req.body.details, dueDate: req.body.dueDate  })
   console.log(newTask.name);
   newTask.users.push(req.user[0].uid)
 

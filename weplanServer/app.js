@@ -130,6 +130,8 @@ app.get("/findTasks", m.findTasks);
 
 app.get("/findWedding", m.findWedding);
 
+app.get("/getMe", m.getMe);
+
 app.post("/setup", function(req,res, next){
 
   m.saveProfile(req, res, next)

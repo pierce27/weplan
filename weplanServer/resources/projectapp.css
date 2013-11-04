@@ -18,6 +18,10 @@
 	width: 20%;
 }
 
+.edit {
+	display: inline-block;
+}
+
 .main-nav {
 	font-size: 18px;
 	font-weight: bold;
