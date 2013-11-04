@@ -119,16 +119,30 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
     $scope.updateDescription = function (idx) {
     
-      var task_to_update = $scope.tasks[idx]
+      var description_id = '.description' + $scope.tasks[idx]._id;
+      var description_id_string = String(description_id)
+      var descHtml = $(description_id_string).html();
+      console.log('description')
+      console.log(descHtml)
+
+      // var detaisl = '.details .' + {$scope.tasks[idx]._id}
+      // var details_id_string = String(details_id)
+
+      var task_to_update = {
+        'id': $scope.tasks[idx]._id,
+        'description': descHtml,
+        'details': $scope.tasks[idx].details
+      }
+
       console.log(task_to_update)
 
 
-      // $http.post('/updateTask', task_to_update).success(function(data){
-      //   console.log('success');
+      $http.post('/updateTask', task_to_update).success(function(data){
+      console.log('success');
+      console.log(data);
+      $(description_id_string).removeClass('show');
 
-      //   // console.log(data);
-
-      // });
+      });
       
 
     };

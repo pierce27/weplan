@@ -132,6 +132,8 @@ app.get("/findWedding", m.findWedding);
 
 app.get("/getMe", m.getMe);
 
+app.post("/updateTask", m.updateTask);
+
 app.post("/setup", function(req,res, next){
 
   m.saveProfile(req, res, next)

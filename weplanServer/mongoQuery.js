@@ -154,6 +154,20 @@ exports.saveNewTask = function (req, res, next){
 }
 
 
+exports.updateTask = function (req, res, next){
+  console.log(req.body)
+
+
+  
+	Task.update({_id: req.body.id}, { description: req.body.description, details: req.body.details}, function(err, numberAffected, raw){
+	    console.log('Updated Task')
+	    res.send('updated')
+
+	})
+
+}
+
+
 exports.deleteTask = function (req, res, next){
   console.log('delete')
   console.log(req.body)
