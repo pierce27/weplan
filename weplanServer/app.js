@@ -44,7 +44,7 @@ passport.use('localSignUp', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-    function(req, username, password, done){
+  function(req, username, password, done){
 
     console.log(req.body)
     console.log('local')
@@ -118,42 +118,16 @@ app.get('/auth/facebook/callback',
   									  failureRedirect: '/login' }));
 
 
-
+//MAIN RENDER
 app.get("/main", auth.ensureAuthenticated, auth.roleRender)
 
+
+//INITIAL USER
 app.get("/login", function(req, res){res.render('login.html')})
 
 app.get("/setup", auth.ensureAuthenticated,  function(req, res){res.render('setup.html')})
 
-
-app.get("/findTasks", m.findTasks);
-
-app.get("/findWedding", m.findWedding);
-
-app.get("/getMe", m.getMe);
-
-app.post("/updateTask", m.updateTask);
-
-app.post("/setup", function(req,res, next){
-
-  m.saveProfile(req, res, next)
-  
-
-})
-
-app.post("/deleteTask", function(req,res, next){
-
-  m.deleteTask(req, res, next)
-  
-
-})
-
-app.post("/newTask", function(req,res, next){
-
-  m.saveNewTask(req, res, next)
-  
-
-})
+app.post("/setup", function(req,res, next){m.saveProfile(req, res, next)})
 
 app.post('/signup',
   passport.authenticate('localSignUp', { successRedirect: '/main',
@@ -164,6 +138,24 @@ app.post('/signin',
   passport.authenticate('localSignIn', { successRedirect: '/main',
                                    failureRedirect: '/login'})
 );
+
+
+//GET DATA FOR MAIN
+app.get("/findTasks", m.findTasks);
+
+app.get("/findWedding", m.findWedding);
+
+app.get("/getMe", m.getMe);
+
+
+//UPDATE DATA FROM MAIN
+app.post("/updateTask", m.updateTask);
+
+app.post("/deleteTask", m.deleteTask);
+
+app.post("/newTask", m.saveNewTask
+
+
 
 
 

@@ -19,8 +19,6 @@ var weddingSchema = mongoose.Schema({
 	location: String
 
 })
-console.log('WEDDING SCHEMA')
-console.log(weddingSchema)
 
 var taskSchema = mongoose.Schema({
     wid: Number,
@@ -263,10 +261,6 @@ exports.createLocal= function(wpUser, done){
     })
 }
 
-
-
-exports.User = User;
-exports.Task = Task;
 
 
 
