@@ -86,9 +86,9 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   $scope.updateDescription = function (idx) {
   
     var description_id = '.description' + $scope.tasks[idx]._id;
-    var descriptionButton_id = '.' + $scope.tasks[idx]._id;
+    var descriptionButton_id = '.descbuttons' + $scope.tasks[idx]._id;
 
-    var descriptionButton_id_string = String(description_id)
+    var descriptionButton_id_string = String(descriptionButton_id)
     var description_id_string = String(description_id)
     var descHtml = $(description_id_string).html();
     console.log('description')
@@ -121,7 +121,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   $scope.editDescription = function ( idx ) {
 
     console.log(idx);
-    var description_id = '.' + $scope.tasks[idx]._id;
+    var description_id = '.descbuttons' + $scope.tasks[idx]._id;
     var description_id_string = String(description_id)
     $(description_id_string).addClass('show');
     console.log(description_id)
@@ -133,7 +133,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   //HIDE EDIT BUTTONS
   $scope.closeDescription = function ( idx ) {
 
-    var description_id = '.' + $scope.tasks[idx]._id;
+    var description_id = '.descbuttons' + $scope.tasks[idx]._id;
     var description_id_string = String(description_id)
     $(description_id_string).removeClass('show');
     console.log('close desc')

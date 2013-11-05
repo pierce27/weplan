@@ -177,16 +177,14 @@
 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}" >
 		                  {{task.name}}
 		                </a>
+		                <span class="pull-right">Due: {{task.dueDate | date:'medium'}}</span>
 		                <br>
 		                <span contenteditable="true" class="description{{task._id}}" contenteditable="true" ng-click='editDescription($index)'>
 		                	{{task.description}}
 		                </span>
 
-	                	
-
-
-	                	<button type="submit" ng-click='updateDescription($index)' class="btn btn-sm btn-primary hide {{task._id}}" >Save</button>
-	                	<button type="button" ng-click='closeDescription($index)' class="btn btn-sm btn-danger hide {{task._id}}">Cancel</button>
+	                	<button type="submit" ng-click='updateDescription($index)' class="btn btn-sm btn-primary hide descbuttons{{task._id}}" >Save</button>
+	                	<button type="button" ng-click='closeDescription($index)' class="btn btn-sm btn-danger hide descbuttons{{task._id}}">Cancel</button>
 
 
 		              </div>
