@@ -148,7 +148,7 @@ app.get("/findWedding", m.findWedding);
 app.get("/getMe", m.getMe);
 
 
-//UPDATE DATA FROM MAIN
+//CRUD DATA FROM MAIN
 app.post("/updateTask", m.updateTask);
 
 app.post("/deleteTask", m.deleteTask);
