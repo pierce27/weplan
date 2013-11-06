@@ -4,6 +4,9 @@ $(function() {
   $( "#datepicker" ).datepicker();
 });
 
+
+
+// -------------------------------------------TASK CONTROLLER -------------------------------------------//
      
 projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   
@@ -76,6 +79,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       console.log('success');
       $scope.tasks.splice(idx, 1);
       // console.log(data);
+      $scope.apply
 
     });
       
@@ -90,7 +94,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
     var descriptionButton_id_string = String(descriptionButton_id)
     var description_id_string = String(description_id)
-    var descHtml = $(description_id_string).html();
+    var descVal = $(description_id_string).text();
     console.log('description')
     console.log(descHtml)
 
@@ -99,7 +103,8 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
     var task_to_update = {
       'id': $scope.tasks[idx]._id,
-      'description': descHtml,
+      'name': $scope.tasks[idx].name,
+      'description': descVal,
       'details': $scope.tasks[idx].details
     }
 
@@ -117,26 +122,117 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   };
 
 
+
+    //UPDATE TASK
+    $scope.update = function (idx, context) {
+  
+      var id = '.' + context + $scope.tasks[idx]._id;
+      var button_id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
+
+      var button_id_string = String(button_id)
+      var id_string = String(id)
+      var val = $(id_string).text();
+      console.log('name')
+      console.log(val)
+
+      // var detaisl = '.details .' + {$scope.tasks[idx]._id}
+      // var details_id_string = String(details_id)
+
+      if(context == 'name') {
+        var task_to_update = {
+          'id': $scope.tasks[idx]._id,
+          'name': val,
+          'description': $scope.tasks[idx].description,
+          'details': $scope.tasks[idx].details,
+          'dueDate': $scope.tasks[idx].dueDate
+        };
+      } else if(context == 'details'){
+        var task_to_update = {
+          'id': $scope.tasks[idx]._id,
+          'name': $scope.tasks[idx].name,
+          'description': $scope.tasks[idx].description,
+          'details': val,
+          'dueDate': $scope.tasks[idx].dueDate
+        }
+      } else if(context =='description'){
+        var task_to_update = {
+          'id': $scope.tasks[idx]._id,
+          'name': $scope.tasks[idx].name,
+          'description': val,
+          'details': $scope.tasks[idx].details,
+          'dueDate': $scope.tasks[idx].dueDate
+        }
+      } else if(context == 'duedate'){
+        var task_to_update = {
+          'id': $scope.tasks[idx]._id,
+          'name': $scope.tasks[idx].name,
+          'description': $scope.tasks[idx].description,
+          'details': $scope.tasks[idx].details,
+          'dueDate': val 
+        }
+      }
+
+      console.log(task_to_update)
+
+
+      $http.post('/updateTask', task_to_update).success(function(data){
+      console.log('success');
+      console.log(data);
+      $(button_id_string).removeClass('show');
+
+      });
+    
+
+  };
+
+
   //SHOW EDIT BUTTONS
-  $scope.editDescription = function ( idx ) {
+  $scope.edit = function ( idx, context ) {
 
     console.log(idx);
-    var description_id = '.descbuttons' + $scope.tasks[idx]._id;
-    var description_id_string = String(description_id)
-    $(description_id_string).addClass('show');
-    console.log(description_id)
+    var id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
+    var id_string = String(id)
+    $(id_string).addClass('show');
+    console.log(id)
 
     
 
   };
 
   //HIDE EDIT BUTTONS
-  $scope.closeDescription = function ( idx ) {
+  $scope.close = function ( idx, context ) {
 
-    var description_id = '.descbuttons' + $scope.tasks[idx]._id;
-    var description_id_string = String(description_id)
-    $(description_id_string).removeClass('show');
+    var id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
+    var id_string = String(id);
+    console.log(id_string)
+    $(id_string).removeClass('show');
     console.log('close desc')
+
+    
+
+  };
+
+
+    //SHOW NAME EDIT BUTTONS
+  $scope.editName = function ( idx ) {
+
+    console.log(idx);
+    var name_id = '.namebuttons' + $scope.tasks[idx]._id;
+    var name_id_string = String(name_id)
+    $(name_id_string).addClass('show');
+    console.log(name_id)
+
+    
+
+  };
+
+  //HIDE NAME EDIT BUTTONS
+  $scope.closeName = function ( idx ) {
+
+    var name_id = '.namebuttons' + $scope.tasks[idx]._id;
+    var name_id_string = String(name_id)
+    $(name_id_string).removeClass('show');
+    console.log('close name')
 
     
 
@@ -154,7 +250,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
 
 
-
+// -------------------------------------------WEDDING CONTROLLER -------------------------------------------//
 
 projectApp.controller('WeddingsCtrl', function WeddingCtrl($scope, $http) {
 

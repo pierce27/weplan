@@ -76,13 +76,6 @@
 
 				  <!-- Collect the nav links, forms, and other content for toggling -->
 				  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				  	  
-
-
-<!-- 				      <button type="button" data-toggle="modal" class="btn btn-primary navbar-btn" data-target="#createTaskArea">New</button> -->
-
-
-
 				    <form class="navbar-form navbar" role="search">
 				    	<button type="button" data-toggle="modal" class="btn btn-primary navbar-btn" data-target="#createTaskArea">New</button>
 				    	<select class="form-control taskOrder"ng-model="orderProp">
@@ -110,46 +103,46 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h3 id="myModalLabel">New Task</h3>
 					</div>
-					<div class="container">
-					<div class="modal-body">
-						<form ng-submit="createTask()" class="form-horizontal">
+
+					<div class="modal-body taskModal">
+						<form ng-submit="createTask()" class="form">
 						    <div class="form-group ">
 							    <label class="control-label" for="inputName">Task Name</label>
-							    <div class="controls">
-								    <input type="text" ng-model="name" name="name" id="inputName" placeholder="Task Name">
+							    <div class="form-group">
+								    <input type="text" ng-model="name" name="name" id="inputName" placeholder="Task Name" class="newTask form-control">
 							    </div>
 						    </div>
 
 						    <div class="form-group ">
 							    <label class="control-label" for="inputDetails">Description</label>
-							    <div class="controls">
-								    <textarea rows="3" type="text" ng-model="description" name="description" id="inputDescription" placeholder="Description"></textarea>
+							    <div class="form-group">
+								    <textarea rows="3" type="text" ng-model="description" name="description" id="inputDescription" placeholder="Description" class="newTask form-control"></textarea>
 							    </div>
 						    </div>
 					    
 						    <div class="form-group ">
 							    <label class="control-label" for="inputDetails">Details</label>
-							    <div class="controls">
-								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details"></textarea>
+							    <div class="form-group">
+								    <textarea rows="3" type="text" ng-model="details" name="details" id="inputDetails" placeholder="Details" class="newTask form-control"></textarea>
 							    </div>
 						    </div>
 
 							<div class="form-group ">
 							    <label class="control-label" for="inputDetails">Due Date</label>
-							    <div class="controls">
-								    <input type="text" ng-model="dueDate" name="dueDate" id="datepicker" />
+							    <div class="form-group">
+								    <input type="text" ng-model="dueDate" name="dueDate" id="datepicker" class="form-control newTask"/>
 							    </div>
 						    </div>
 						    
 						    <div class="form-group">
-							    <div class="controls">
+							    <div class="form-group">
 								    <!-- <input type="submit"  data-dismiss="modal" aria-hidden="true" id="createTask" class="btn" value="Create Task"/> -->
 								    <button type="submit" id="createTask" class="btn btn-default btn-primary">Save changes</button>
 							    </div>
 						    </div>
 					    </form>
 					</div>
-				</div>
+
 
 <!-- 					<div class="modal-footer">
 						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -164,27 +157,39 @@
 
 				  <div  class="panel-group" id="accordion2">
 		            <div ng-repeat="task in tasks | orderBy: orderProp | filter:query" class="panel panel-default">
-							<div style="float:right;, position: relative; right: 200px;" class="btn-group">
 
-						    <a class="btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-						    <ul class="dropdown-menu">
-						    <li><a href="#"><i class="glyphicon-pencil"></i> Edit</a></li>
-						    <li><button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon-trash glyphicon-white"></i>Delete</button></li>
-						    </ul>
-						    </div>
 		            	
-		              <div class="panel-heading">
-		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}" >
+		              <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
+<!-- 		                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}" >
 		                  {{task.name}}
-		                </a>
-		                <span class="pull-right">Due: {{task.dueDate | date:'medium'}}</span>
-		                <br>
-		                <span contenteditable="true" class="description{{task._id}}" contenteditable="true" ng-click='editDescription($index)'>
+		                </a> -->
+
+						<strong contenteditable="true">
+		                  <em class="name{{task._id}}" ng-click='edit($index, "name")'>{{task.name}}</em>
+		                </strong>
+		                <div class="btn-group" style="padding-left: 10px;">
+							<button type="submit" ng-click='update($index, "name")' class="btn btn-sm btn-primary hide namebuttons{{task._id}}" >Save</button>
+	                		<button type="button" ng-click='close($index, "name")' class="btn btn-sm btn-danger hide namebuttons{{task._id}}">Cancel</button>
+	                	</div>
+
+
+		                <strong class="pull-right">Due: </strong><br>
+						<span class="description{{task._id}}" contenteditable="true" ng-click='edit($index, "description")'>
 		                	{{task.description}}
 		                </span>
 
-	                	<button type="submit" ng-click='updateDescription($index)' class="btn btn-sm btn-primary hide descbuttons{{task._id}}" >Save</button>
-	                	<button type="button" ng-click='closeDescription($index)' class="btn btn-sm btn-danger hide descbuttons{{task._id}}">Cancel</button>
+		                <span class="pull-right description{{task._id}}" contenteditable="true" ng-click='edit($index, "duedate")'>{{task.dueDate | date:'MMMM dd'}}</span>
+		                <div class="btn-group pull-right" style="padding-right: 10px; padding-right: 2px;">
+							<button type="submit" ng-click='update($index, "duedate")' class="btn btn-sm btn-primary hide duedatebuttons{{task._id}}" >Save</button>
+	                		<button type="button" ng-click='close($index, "duedate")' class="btn btn-sm btn-danger hide duedatebuttons{{task._id}}">Cancel</button>
+	                	</div>
+		                <br>
+
+
+		                <div class="btn-group" style="padding-left: 10px;">
+							<button type="submit" ng-click='update($index, "description")' class="btn btn-sm btn-primary hide descriptionbuttons{{task._id}}" >Save</button>
+	                		<button type="button" ng-click='close($index, "description")' class="btn btn-sm btn-danger hide descriptionbuttons{{task._id}}">Cancel</button>
+	                	</div>
 
 
 		              </div>
@@ -193,18 +198,17 @@
 		              <div class="panel-body">
 		              	<div class="row task-area">
 		              		<!-- Start task details -->
+
 		              		<div class="col-md-3 ">
 
 				                	<h4>Details:</h4> 
-				                	<div class="description" contenteditable="true" ng-click='editDescription()'  >{{task.details}}</div>
+				                	<span class="details{{task._id}}" contenteditable="true" ng-click='edit($index, "details")' >{{task.details}}</span>
 				                	<br>
-				                	<button type="button" ng-click='closeDescription()' class="close hide description" aria-hidden="true">×</button>
+					                <div class="btn-group" style="padding-left: 10px;">
+										<button type="submit" ng-click='update($index, "details")' class="btn btn-sm btn-primary hide detailsbuttons{{task._id}}" >Save</button>
+				                		<button type="button" ng-click='close($index, "details")' class="btn btn-sm btn-danger hide detailsbuttons{{task._id}}">Cancel</button>
+				                	</div>
 
-				                	<button type="submit" ng-click='updateDescription()' class="btn btn-sm btn-primary hide description">Save</button>
-				                	<h4>Created By:</h4> 
-				                	{{task.creatorFirstName}} 
-				                	<h4>Created</h4>
-				                	{{task.created | date:'medium'}}
 				                	
 
 
@@ -213,28 +217,34 @@
 			                <!-- end task details -->
 			                <!-- Start task discussion -->
 			                <div class="col-md-5">
-			                	<textarea rows="10" style="width: 500px;"> 
-A: Hello Everyone 
-K: Hi what do we have to do 
-			                	</textarea>
+
+
+			                	<div style="width: 70%;"> 
+
+			                	</div>
 
 		                
 			                </div>
+			                <div style="" class=" pull-right btn-group">
+
+								    <a class="btn-sm dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+<!-- 								    <ul class="dropdown-menu">
+									    <li><button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Delete</button></li>
+								    </ul> -->
+							    </div>
 			            </div>
 			                <!-- End task detials -->
 			                <br>
 			                <!-- Start Task Controls -->
 			                <div class="row task-area">
 			                	<div class="col-md-3">
-									<a class="btn btn-default accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{task._id}}">
-										Collapse
-									</a>
+									<button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Delete</button>
 
 			                	</div>
 
 			                	<div class="col-md-7">
-									<form class="form-search">
-								        <input type="text" class="input-medium search-query" style="height: 29px;">
+									<form class="form">
+								        <textarea type="text-area" rows="2"></textarea><br>
 								        <button type="submit" class="btn">Send Message</button>
 							        </form>
 							        
