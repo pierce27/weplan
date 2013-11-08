@@ -128,6 +128,8 @@ exports.deleteTask = function (req, res, next){
 
 
 
+
+//FIND OR CREATE USER FOR FB LOGIN
 exports.findOrCreateFB= function(wpUser, done){   
 
   User.find({uid: wpUser.id}, function(err, user){
@@ -152,6 +154,10 @@ exports.findOrCreateFB= function(wpUser, done){
     })
 }
 
+
+
+
+//FIND LOCAL FOR LOCAL LOGIN
 exports.findLocal= function(wpUser, done){  
 
 	  	console.log('Sign in User')
@@ -163,16 +169,15 @@ exports.findLocal= function(wpUser, done){
   		console.log(user);
       if(user.length == 0){
 
+
       	return done(null, false, { message: 'User Does Not Exist.' });
 
-
-        
-        
+ 
 
       } else {
 
       	theUser = user[0];
-        done(null, theUser);
+        return done(null, theUser);
         console.log('Logging In');
       }
 

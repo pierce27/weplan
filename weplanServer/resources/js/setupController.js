@@ -55,7 +55,7 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
     };
 
     $http.post('/signin', user).success(function(data){
-      console.log('success');
+      console.log(data);
       // window.location = '/main'
       // console.log(data);
 
