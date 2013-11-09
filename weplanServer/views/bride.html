@@ -178,7 +178,7 @@
 		                	{{task.description}}
 		                </span>
 
-		                <span class="pull-right description{{task._id}}" contenteditable="true" ng-click='edit($index, "duedate")'>{{task.dueDate | date:'MMMM dd'}}</span>
+		                <span class="pull-right description{{task._id}}" contenteditable="true" ng-click='edit($index, "duedate")'>{{task.dueDate | date:'M/d/yy'}}</span>
 		                <div class="btn-group pull-right" style="padding-right: 10px; padding-right: 2px;">
 							<button type="submit" ng-click='update($index, "duedate")' class="btn btn-sm btn-primary hide duedatebuttons{{task._id}}" >Save</button>
 	                		<button type="button" ng-click='close($index, "duedate")' class="btn btn-sm btn-danger hide duedatebuttons{{task._id}}">Cancel</button>

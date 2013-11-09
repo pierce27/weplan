@@ -125,6 +125,11 @@ app.get("/main", auth.ensureAuthenticated, auth.roleRender)
 //INITIAL USER
 app.get("/login", function(req, res){res.render('login.html')})
 
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/login');
+});
+
 app.get("/setup", auth.ensureAuthenticated,  function(req, res){res.render('setup.html')})
 
 app.post("/setup", function(req,res, next){m.saveProfile(req, res, next)})

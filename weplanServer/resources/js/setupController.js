@@ -55,6 +55,7 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
     };
 
     $http.post('/signin', user).success(function(data){
+      console.log('heres data')
       console.log(data);
       // window.location = '/main'
       // console.log(data);
@@ -62,6 +63,19 @@ projectApp.controller('SetupCtrl', function SetupCtrl($scope, $http) {
       window.location = '/main'
     });
 
+  }
+
+
+
+  $scope.logout = function(){
+    console.log('loggin out')
+
+    $http.get('/logout').success(function(data){
+      console.log('heres data')
+      // window.location = '/main'
+      // console.log(data);
+
+    });
 
   }
 

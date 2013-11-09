@@ -3,137 +3,133 @@
         <script src="/jquery-1.8.2.js" type="text/javascript"></script>
         <script src="/js/angular.js"></script>
         <script src="/js/setupController.js"></script> 
-        <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+
+        <link href="/bootstrapNew/css/bootstrap.css" rel="stylesheet">
+        <script src="/bootstrapNew/js/bootstrap.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="projectapp.css">
-        <script src="bootstrap/bootstrap-collapse.js"></script>
-        <script src="bootstrap/bootstrap-transition.js"></script>
+
+
         <link rel="stylesheet" type="text/css" href="bootstrap/social-buttons.css">
         <link rel="stylesheet" type="text/css" href="font-awesome-4.0.1/css/font-awesome.css">
 
 
 </head>
   <body>
-    <div class="row">
-      <div class="row">
-          <div class="span14 offset2">
-      <div class="hero-unit">
+
+
+
+    <div class="container">
+      <div class="jumbotron">
         
         <h1>We Plan</h1>
         <p>Welcome to the We Plan app. Here you will be able to easily manage, search, and discover verything you need for your wedding</p>
         <p>
 
-              <a href="/auth/facebook" class="btn btn-facebook btn-large">
+              <a href="/auth/facebook" class="btn btn-facebook btn-lg">
                 <i class="fa fa-facebook"></i> | Connect with Facebook
               </a>
         </p>
+      </div>
 
 
 
-            <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span4 offset1">
+            
+      <div class="row">
+        <div class="col-md-4 col-md-offset-1">
 
           <!-- Start Form Sign Up -->
-           <form ng-submit="signup()" ng-controller="SetupCtrl" class="form-horizontal signup">
+           <form ng-submit="signup()" ng-controller="SetupCtrl" class="signup">
               <legend>Sign Up</legend>
               
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputEmail">First Name</label>
                 <div class="controls">
-                  <input style="height:28px;" ng-model="firstName" type="text" id="inputEmail" placeholder="First Name">
+                  <input class="form-control" style="height:28px;" ng-model="firstName" type="text" id="inputEmail" placeholder="First Name" required>
                 </div>
               </div>
 
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputEmail">Last Name</label>
                 <div class="controls">
-                  <input style="height:28px;" type="text" ng-model="lastName" placeholder="Last Name">
+                  <input class="form-control" style="height:28px;" type="text" ng-model="lastName" placeholder="Last Name" required>
                 </div>
               </div>
 
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputEmail">Email</label>
                 <div class="controls">
-                  <input style="height:28px;" type="text" id="inputEmail" ng-model="email" placeholder="Email">
+                  <input class="form-control" style="height:28px;" type="email" id="inputEmail" ng-model="email" placeholder="Email" required>
                 </div>
               </div>
               
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputPassword">Password</label>
                 <div class="controls">
-                  <input style="height:28px;" type="password" id="inputPassword" ng-model="password" placeholder="Password">
+                  <input class="form-control" style="height:28px;" type="password" id="inputPassword" ng-model="password" placeholder="Password" required>
                 </div>
               </div>
 
-              <div class="control-group">
-                <label class="control-label" for="inputPassword">Confirm Password</label>
+              <div class="form-group">
+                <label  for="inputPassword">Confirm Password</label>
                 <div class="controls">
-                  <input style="height:28px;" type="password" id="inputPassword" placeholder="Password">
+                  <input class="form-control" style="height:28px;" type="password" id="inputPassword" placeholder="Password">
                 </div>
               </div>
             
-              <div class="control-group">
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox"> I Agree to Terms
-                  </label>
-                  
+                
+                
                   <!-- <a href="project.html">Sign Up</a> -->
                   <!-- <button type="submit" class="btn">Sign Up</button> -->
-                  <input type="submit" id="signup" class="btn" value="Sign Up"/>
-                </div>
-              </div>
+                  <button class="btn btn-primary" type="submit" id="signup">Sign Up</button>
             </form>
 
 
 
         </div>
-        <div class="span4 offset1">
+        <div class="col-md-4 col-md-offset-1">
 
 
           <form ng-submit="signin()" ng-controller="SetupCtrl" class="form-horizontal signup">
               <legend>Sign In</legend>
 
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputEmail">Email</label>
                 <div class="controls">
-                  <input style="height:28px;" type="text" id="inputEmail" ng-model="email" placeholder="Email">
+                  <input class="form-control" style="height:28px;" type="email" id="inputEmail" ng-model="email" placeholder="Email" required>
                 </div>
               </div>
               
-              <div class="control-group">
+              <div class="form-group">
                 <label class="control-label" for="inputPassword">Password</label>
                 <div class="controls">
-                  <input style="height:28px;" type="password" id="inputPassword" ng-model="password" placeholder="Password">
+                  <input class="form-control" style="height:28px;" type="password" id="inputPassword" ng-model="password" placeholder="Password" required>
                 </div>
               </div>
-            
-              <div class="control-group">
-                <div class="controls">
-                  <label class="checkbox">
-                    <input type="checkbox"> I Agree to Terms
-                  </label>
-                  
                   <!-- <a href="project.html">Sign Up</a> -->
                   <!-- <button type="submit" class="btn">Sign Up</button> -->
-                  <input type="submit" id="signin" class="btn" value="Sign In"/>
-                </div>
-              </div>
+                  <!-- <input class="form-control" type="submit" id="signin" class="btn" value="Sign In"/> -->
+                  <button class="btn btn-primary" type="submit" id="signin">Sign In</button>
+
+
             </form>
 
 
+
+          </div>
+                      <div>
+            <button ng-click='logout()' class="btn btn-primary" >Logout</button>
+            </div>
         </div>
-      </div>
-    </div>
-        </div>
-        </div>
-      </div>
+
+  </div>
 
 
 
 
 
-        </div>
+
+
+
 
       </div>
     </div> 

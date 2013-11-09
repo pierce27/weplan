@@ -86,42 +86,6 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   };
 
 
-  //UPDATE DESCRITPION
-  $scope.updateDescription = function (idx) {
-  
-    var description_id = '.description' + $scope.tasks[idx]._id;
-    var descriptionButton_id = '.descbuttons' + $scope.tasks[idx]._id;
-
-    var descriptionButton_id_string = String(descriptionButton_id)
-    var description_id_string = String(description_id)
-    var descVal = $(description_id_string).text();
-    console.log('description')
-    console.log(descHtml)
-
-    // var detaisl = '.details .' + {$scope.tasks[idx]._id}
-    // var details_id_string = String(details_id)
-
-    var task_to_update = {
-      'id': $scope.tasks[idx]._id,
-      'name': $scope.tasks[idx].name,
-      'description': descVal,
-      'details': $scope.tasks[idx].details
-    }
-
-    console.log(task_to_update)
-
-
-    $http.post('/updateTask', task_to_update).success(function(data){
-    console.log('success');
-    console.log(data);
-    $(descriptionButton_id_string).removeClass('show');
-
-    });
-    
-
-  };
-
-
 
     //UPDATE TASK
     $scope.update = function (idx, context) {
@@ -134,6 +98,10 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       var val = $(id_string).text();
       console.log('name')
       console.log(val)
+
+      var newDueDate = new Date($scope.tasks[idx._id]);
+      console.log('NEW DATE')
+      console.log(newDueDate)
 
       // var detaisl = '.details .' + {$scope.tasks[idx]._id}
       // var details_id_string = String(details_id)

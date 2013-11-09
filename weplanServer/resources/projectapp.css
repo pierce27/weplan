@@ -3,6 +3,10 @@
 	top: 60px;
 }
 
+.signup label {
+	font-size: 14px;
+}
+
 .signin {
 	position: relative;
 	top: 60px;
@@ -11,6 +15,12 @@
 .tasks{
 	height: 200%;
 	width: 100%;
+
+}
+
+.jumbotron {
+
+	padding: 10%;
 
 }
 

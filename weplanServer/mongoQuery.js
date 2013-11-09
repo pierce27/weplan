@@ -41,7 +41,8 @@ var userSchema = mongoose.Schema({
 	password: String,
 	profilepic: String,
 	role: String,
-	wid: Number
+	wid: Number,
+	visits: Number
 
 });
 
@@ -163,11 +164,12 @@ exports.findLocal= function(wpUser, done){
 	  	console.log('Sign in User')
   		console.log(wpUser); 
 
-  User.find({uid: wpUser.email}, function(err, user){
+  User.find({uid: wpUser.email, password: wpUser.password}, function(err, user){
 
   		console.log('Sign in User')
-  		console.log(user);
-      if(user.length == 0){
+  		console.log(user.length);
+  		var userLogin = user.length
+      if(user.length < 1){
 
 
       	return done(null, false, { message: 'User Does Not Exist.' });
