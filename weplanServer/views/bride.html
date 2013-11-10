@@ -106,6 +106,14 @@
 
 					<div class="modal-body taskModal">
 						<form ng-submit="createTask()" class="form">
+
+							<div class="form-group ">
+							    <label class="control-label" for="inputDetails">Due Date</label>
+							    <div class="form-group">
+								    <input type="text" ng-model="dueDate" name="dueDate" id="datepicker" class="form-control newTask"/>
+							    </div>
+						    </div>
+						    
 						    <div class="form-group ">
 							    <label class="control-label" for="inputName">Task Name</label>
 							    <div class="form-group">
@@ -127,17 +135,13 @@
 							    </div>
 						    </div>
 
-							<div class="form-group ">
-							    <label class="control-label" for="inputDetails">Due Date</label>
-							    <div class="form-group">
-								    <input type="text" ng-model="dueDate" name="dueDate" id="datepicker" class="form-control newTask"/>
-							    </div>
-						    </div>
+
 						    
 						    <div class="form-group">
 							    <div class="form-group">
 								    <!-- <input type="submit"  data-dismiss="modal" aria-hidden="true" id="createTask" class="btn" value="Create Task"/> -->
-								    <button type="submit" id="createTask" class="btn btn-default btn-primary">Save changes</button>
+								    <button type="submit" id="createTask" class="btn btn-default btn-primary">Save</button>
+								    <button type="submit" id="editTask" class="btn btn-default btn-primary hide">Save changes</button>
 							    </div>
 						    </div>
 					    </form>
@@ -239,6 +243,8 @@
 			                <div class="row task-area">
 			                	<div class="col-md-3">
 									<button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Delete</button>
+
+									<button type="button" ng-click="showEdit($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Edit</button>
 
 			                	</div>
 

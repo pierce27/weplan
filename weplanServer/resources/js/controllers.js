@@ -158,6 +158,22 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   };
 
 
+  $scope.editTask = function (idx){
+
+  }
+
+  $scope.showEdit = function(idx){
+
+    $scope.details = $scope.tasks[idx].details
+    $scope.dueDate = $scope.tasks[idx].dueDate
+    $scope.name = $scope.tasks[idx].name
+    $scope.description = $scope.tasks[idx].description
+    $('#createTask').addClass('hide')
+    $('#createTask').removeClass('hide')
+    $('#createTaskArea').modal('show')
+
+  }
+
   //SHOW EDIT BUTTONS
   $scope.edit = function ( idx, context ) {
 
