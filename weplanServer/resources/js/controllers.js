@@ -10,6 +10,10 @@ $(function() {
      
 projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
   
+   
+
+
+
   //GET TASKS FOR MAIN
   $http.get('/findTasks').success(function(data){
 
