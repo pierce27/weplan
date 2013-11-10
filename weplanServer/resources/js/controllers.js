@@ -169,7 +169,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
     $scope.name = $scope.tasks[idx].name
     $scope.description = $scope.tasks[idx].description
     $('#createTask').addClass('hide')
-    $('#createTask').removeClass('hide')
+    $('#editTask').removeClass('hide')
     $('#createTaskArea').modal('show')
 
   }
