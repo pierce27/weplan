@@ -95,7 +95,7 @@ exports.updateTask = function (req, res, next){
 
 
   
-	Task.update({_id: req.body.id}, { name: req.body.name, description: req.body.description, details: req.body.details, dueDate: req.body.dueDate}, function(err, numberAffected, raw){
+	Task.update({_id: req.body. id}, { name: req.body.name, description: req.body.description, details: req.body.details, dueDate: req.body.dueDate}, function(err, numberAffected, raw){
 	    console.log('Updated Task')
 	    console.log(err)
 	    res.send('updated')

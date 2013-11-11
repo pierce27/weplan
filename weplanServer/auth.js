@@ -1,6 +1,6 @@
 var m = require('./mongoQuery')
 
-module.exports.ensureAuthenticated = function (req, res, next){
+module.exports.checkAuthenticated = function (req, res, next){
   if (req.isAuthenticated() == false){
   	console.log('not logged in')
     res.redirect('/login')
@@ -9,10 +9,29 @@ module.exports.ensureAuthenticated = function (req, res, next){
 
   } else {
   	req.session.cookie.maxAge = 5 * 60 * 1000;
-  	next()
+  	res.redirect('/main')
 
   }
 }
+
+
+
+module.exports.ensureAuthenticated = function (req, res, next){
+  if (req.isAuthenticated() == false){
+    console.log('not logged in')
+    res.redirect('/login')
+    console.log(req.isAuthenticated())
+
+
+  } else {
+    req.session.cookie.maxAge = 5 * 60 * 1000;
+    next()
+
+  }
+}
+
+
+
 
 module.exports.roleRender = function (req, res, next){
 	if (req.user[0].role == ''){

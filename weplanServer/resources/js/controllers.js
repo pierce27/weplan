@@ -138,6 +138,7 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
 
 
+
 });
 
 
@@ -156,6 +157,23 @@ projectApp.controller('WeddingsCtrl', function WeddingCtrl($scope, $http) {
 
 
   });
+
+
+  //LOGOUT
+
+  $scope.logout = function(){
+    console.log('loggin out')
+
+    $http.get('/logout').success(function(data){
+      console.log('heres data')
+      window.location = '/login'
+      // console.log(data);
+
+    });
+  }
+
+
+
 
 
 })
