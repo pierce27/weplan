@@ -53,20 +53,43 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
 
 
 
-  //CREATE TASK
-  $scope.createTask = function() {
+  //SAVE TASK
+  $scope.saveTask = function() {
+      console.log('saving')
+      idx = $scope.idx
       i = $scope.tasks.length + 1
-      var newTask = {name: this.name, description: this.description, details: this.details, id: i, dueDate: this.dueDate};
+      var task_to_save = {name: $scope.name, description: $scope.description, details: $scope.details, id: $scope.id, dueDate: $scope.dueDate};
       console.log('date')
       console.log($scope.dueDate)
       // this.tasks.push(newTask);
-      $http.post('/newTask', newTask).success(function(data){
-        console.log('Saved');
-        $scope.tasks.push(data);
-        $('#createTaskArea').modal('hide')
+      if ($scope.id == 0){
+        $http.post('/newTask', task_to_save).success(function(data){
+          console.log('Saved');
+          $scope.tasks.push(data);
+          $('#createTaskArea').modal('hide')
 
-        
-      });
+          
+        });
+      } else {
+      $http.post('/updateTask', task_to_save).success(function(data){
+      
+          console.log('Saved');
+          $scope.tasks[idx].details = $scope.details
+          $scope.details = ''
+          $scope.tasks[idx].dueDate = $scope.dueDate 
+          $scope.dueDate = ''
+          $scope.tasks[idx].name = $scope.name
+          $scope.name = ''
+          $scope.tasks[idx].description = $scope.description
+          $scope.description = ''
+          $scope.idx = 0
+          $scope.id = 0
+          $scope.apply
+          $('#createTaskArea').modal('hide')
+
+          
+        });
+      }
       
   };
 
@@ -89,147 +112,29 @@ projectApp.controller('TaskListCtrl', function TaskListCtrl($scope, $http) {
       
   };
 
-
-
-    //UPDATE TASK
-    $scope.update = function (idx, context) {
   
-      var id = '.' + context + $scope.tasks[idx]._id;
-      var button_id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
-
-      var button_id_string = String(button_id)
-      var id_string = String(id)
-      var val = $(id_string).text();
-      console.log('name')
-      console.log(val)
-
-      var newDueDate = new Date($scope.tasks[idx._id]);
-      console.log('NEW DATE')
-      console.log(newDueDate)
-
-      // var detaisl = '.details .' + {$scope.tasks[idx]._id}
-      // var details_id_string = String(details_id)
-
-      if(context == 'name') {
-        var task_to_update = {
-          'id': $scope.tasks[idx]._id,
-          'name': val,
-          'description': $scope.tasks[idx].description,
-          'details': $scope.tasks[idx].details,
-          'dueDate': $scope.tasks[idx].dueDate
-        };
-      } else if(context == 'details'){
-        var task_to_update = {
-          'id': $scope.tasks[idx]._id,
-          'name': $scope.tasks[idx].name,
-          'description': $scope.tasks[idx].description,
-          'details': val,
-          'dueDate': $scope.tasks[idx].dueDate
-        }
-      } else if(context =='description'){
-        var task_to_update = {
-          'id': $scope.tasks[idx]._id,
-          'name': $scope.tasks[idx].name,
-          'description': val,
-          'details': $scope.tasks[idx].details,
-          'dueDate': $scope.tasks[idx].dueDate
-        }
-      } else if(context == 'duedate'){
-        var task_to_update = {
-          'id': $scope.tasks[idx]._id,
-          'name': $scope.tasks[idx].name,
-          'description': $scope.tasks[idx].description,
-          'details': $scope.tasks[idx].details,
-          'dueDate': val 
-        }
-      }
-
-      console.log(task_to_update)
-
-
-      $http.post('/updateTask', task_to_update).success(function(data){
-      console.log('success');
-      console.log(data);
-      $(button_id_string).removeClass('show');
-
-      });
-    
-
-  };
-
-
-  $scope.editTask = function (idx){
-
-  }
-
   $scope.showEdit = function(idx){
 
+    $scope.id = $scope.tasks[idx]._id
+    $scope.idx = idx
     $scope.details = $scope.tasks[idx].details
     $scope.dueDate = $scope.tasks[idx].dueDate
     $scope.name = $scope.tasks[idx].name
     $scope.description = $scope.tasks[idx].description
-    $('#createTask').addClass('hide')
-    $('#editTask').removeClass('hide')
+    // $('#createTask').addClass('hide')
+    // $('#editTask').removeClass('hide')
     $('#createTaskArea').modal('show')
 
   }
 
-  //SHOW EDIT BUTTONS
-  $scope.edit = function ( idx, context ) {
+  $scope.showNew = function(){
 
-    console.log(idx);
-    var id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
-    var id_string = String(id)
-    $(id_string).addClass('show');
-    console.log(id)
-
-    
-
-  };
-
-  //HIDE EDIT BUTTONS
-  $scope.close = function ( idx, context ) {
-
-    var id = '.' + context + 'buttons' + $scope.tasks[idx]._id;
-    var id_string = String(id);
-    console.log(id_string)
-    $(id_string).removeClass('show');
-    console.log('close desc')
-
-    
-
-  };
+    $scope.idx = 0
+    $scope.id = 0
+    $('#createTaskArea').modal('show')
 
 
-    //SHOW NAME EDIT BUTTONS
-  $scope.editName = function ( idx ) {
-
-    console.log(idx);
-    var name_id = '.namebuttons' + $scope.tasks[idx]._id;
-    var name_id_string = String(name_id)
-    $(name_id_string).addClass('show');
-    console.log(name_id)
-
-    
-
-  };
-
-  //HIDE NAME EDIT BUTTONS
-  $scope.closeName = function ( idx ) {
-
-    var name_id = '.namebuttons' + $scope.tasks[idx]._id;
-    var name_id_string = String(name_id)
-    $(name_id_string).removeClass('show');
-    console.log('close name')
-
-    
-
-  };
-
-
-
-
-
+  }
 
 
 
