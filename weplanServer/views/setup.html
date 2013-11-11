@@ -33,7 +33,7 @@
         <div class="row">
 
             <div class="bgform col-md-8 col-md-offset-2">
-                <div class="jumbotron">
+                <div class="jumbotron" id="setupForm">
               <legend>Tell Us About Your Wedding</legend>
               <div class="row">
                 <form ng-submit="start()" ng-controller="SetupCtrl">
@@ -42,17 +42,17 @@
 
                     <div class="form-group">                
                         <label for="name">Name</label>
-                        <input  id="name" class="form-control" ng-model="name" type="text">
+                        <input  id="name" class="form-control" ng-model="name" type="text" required>
                     </div>
 
                     <div class="form-group">                
                         <label for="location">Location</label>
-                        <input  id="location" class="form-control" ng-model="location" type="text">
+                        <input  id="location" class="form-control" ng-model="location" type="text" required>
                     </div>
 
                     <div class="form-group">                
                         <label for="role">Role</label>
-                        <select id="role" class="form-control" ng-model="role">
+                        <select id="role" class="form-control" ng-model="role" required>
                           <option value="bride">Bride</option>
                           <option value="groom">Groom</option>
                           <option value="moh">Maid of Honor</option>
@@ -64,7 +64,7 @@
 
                     <div class="form-group">                
                         <label for="date">Date of Wedding</label>
-                        <input  id="date" class="form-control" ng-model="date" type="datetime">
+                        <input  id="date" class="form-control" ng-model="date" type="datetime" required>
                     </div>
                                     
 

@@ -30,7 +30,7 @@
           <br><br>
           <span>{{wedding.name}}</span>
           <button class="btn btn-default btn-primary refresh" type="button">Refresh Data</button> 
-          <button ng-click='logout()' class="btn btn-primary">Logout</button>
+          <button ng-click='logout()' class="btn btn-default">Logout</button>
         </div>
         <!-- End Left Nav -->
         
@@ -169,31 +169,16 @@
 		                </a> -->
 
 						<strong contenteditable="true">
-		                  <em class="name{{task._id}}" ng-click='edit($index, "name")'>{{task.name}}</em>
+		                  <em class="name{{task._id}}">{{task.name}}</em>
 		                </strong>
-		                <div class="btn-group" style="padding-left: 10px;">
-							<button type="submit" ng-click='update($index, "name")' class="btn btn-sm btn-primary hide namebuttons{{task._id}}" >Save</button>
-	                		<button type="button" ng-click='close($index, "name")' class="btn btn-sm btn-danger hide namebuttons{{task._id}}">Cancel</button>
-	                	</div>
-
 
 		                <strong class="pull-right">Due: </strong><br>
-						<span class="description{{task._id}}" contenteditable="true" ng-click='edit($index, "description")'>
+						<span class="description{{task._id}}">
 		                	{{task.description}}
 		                </span>
 
-		                <span class="pull-right description{{task._id}}" contenteditable="true" ng-click='edit($index, "duedate")'>{{task.dueDate | date:'M/d/yy'}}</span>
-		                <div class="btn-group pull-right" style="padding-right: 10px; padding-right: 2px;">
-							<button type="submit" ng-click='update($index, "duedate")' class="btn btn-sm btn-primary hide duedatebuttons{{task._id}}" >Save</button>
-	                		<button type="button" ng-click='close($index, "duedate")' class="btn btn-sm btn-danger hide duedatebuttons{{task._id}}">Cancel</button>
-	                	</div>
-		                <br>
+		                <span class="pull-right description{{task._id}}">{{task.dueDate | date:'M/d/yy'}}</span>
 
-
-		                <div class="btn-group" style="padding-left: 10px;">
-							<button type="submit" ng-click='update($index, "description")' class="btn btn-sm btn-primary hide descriptionbuttons{{task._id}}" >Save</button>
-	                		<button type="button" ng-click='close($index, "description")' class="btn btn-sm btn-danger hide descriptionbuttons{{task._id}}">Cancel</button>
-	                	</div>
 
 
 		              </div>
@@ -206,15 +191,8 @@
 		              		<div class="col-md-3 ">
 
 				                	<h4>Details:</h4> 
-				                	<span class="details{{task._id}}" contenteditable="true" ng-click='edit($index, "details")' >{{task.details}}</span>
-				                	<br>
-					                <div class="btn-group" style="padding-left: 10px;">
-										<button type="submit" ng-click='update($index, "details")' class="btn btn-sm btn-primary hide detailsbuttons{{task._id}}" >Save</button>
-				                		<button type="button" ng-click='close($index, "details")' class="btn btn-sm btn-danger hide detailsbuttons{{task._id}}">Cancel</button>
-				                	</div>
-
+				                	<span class="details{{task._id}}">{{task.details}}</span>
 				                	
-
 
 
 			                </div>
@@ -242,9 +220,9 @@
 			                <!-- Start Task Controls -->
 			                <div class="row task-area">
 			                	<div class="col-md-3">
-									<button type="button" ng-click="deleteTask($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Delete</button>
+									<button type="button" ng-click="deleteTask($index)" class="btn btn-sm btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Delete</button>
 
-									<button type="button" ng-click="showEdit($index)" class="btn btn-default btn-danger" href="#"><i class="glyphicon glyphicon-trash glyphicon-white"></i>Edit</button>
+									<button type="button" ng-click="showEdit($index)" class="btn btn-sm btn-primary btn-default" href="#"><i class="glyphicon glyphicon-pencil glyphicon-white"></i>Edit</button>
 
 			                	</div>
 

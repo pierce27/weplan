@@ -16,7 +16,8 @@ var weddingSchema = mongoose.Schema({
 	bride_uid: String,
 	groom_uid: String,
 	date: Date,
-	location: String
+	location: String,
+	users: [String]
 
 })
 
@@ -173,7 +174,8 @@ exports.findLocal= function(wpUser, done){
       if(user.length < 1){
 
 
-      	return done(null, false, { message: 'User Does Not Exist.' });
+      	// return done(null, false, { message: 'User Does Not Exist.' });
+      	return 0
 
  
 

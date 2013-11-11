@@ -53,6 +53,10 @@
 	height: 100px;*/
 }
 
+#setupForm {
+	padding: 5%;
+}
+
 form input {
 	height: 28px;
 }
